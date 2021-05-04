@@ -1,5 +1,8 @@
 from tkinter import *
-
+import Profesional
+import Alerta
+import Paciente
+import Centro_Salud
 #Definir la ventana
 root=Tk()
 root.geometry("1200x600")
@@ -66,21 +69,32 @@ def salud():
 
     #Ocultar pantallas
     alertas_label.grid_remove()
+    alertas_frame.grid_remove()
     return True
 
 def alertas():
     alertas_label.config(
         bg="red",
         font=("Arial",18),
-        padx=250
+        padx=560
     )
     alertas_label.grid(row=0, column=0)
     #Ocultar pantallas
     salud_label.grid_remove()
     salud_frame.grid_remove()
+
+    #Opciones Pacientes
+    alertas_frame.grid(row=1)
+    alertas_alerta_label.grid(row=1,column=1, padx=5, pady=5)
+    alertas_paciente_n_entry.grid(row=1, column=2, padx=5,sticky=W)
+    botonRut.grid(row=1, column=3, padx=5, sticky=W)
+    botonRut.config(cursor="hand2")
+    botonAlerta.grid(row=2, column=2, padx=20,pady=20)
+    botonAlerta.config(cursor="hand2",bg="red",padx=20,pady=20,font=("Arial", 18))
+
     return True
 
-#Variables
+#Variables Centro de salud
 nomP=StringVar()
 nomM=StringVar()
 
@@ -92,6 +106,11 @@ nombreM=StringVar()
 apellidoM=StringVar()
 fonoM=IntVar()
 especialidad=StringVar()
+
+#Variables Paciente
+nomPa=StringVar()
+apellidoPa=StringVar()
+fonoPa=IntVar()
 
 #Definir campos salud
 salud_label= Label(root, text="Centro de salud")
@@ -129,13 +148,19 @@ botonBM=Button(salud_frame,text="Buscar")
 #Definir campo alertas
 alertas_label= Label(root, text="Paciente")
 
+#Opciones Paciente
+alertas_frame=Frame(root)
+alertas_alerta_label=Label(alertas_frame, text="Rut")
+alertas_paciente_n_entry=Entry(alertas_frame,textvariable=nomPa)
+botonRut=Button(alertas_frame,text="Buscar")
+botonAlerta=Button(alertas_frame, text="Emitir Alerta")
 
 
 salud()
 #Menu superior
 menu_superior= Menu(root)
 menu_superior.add_command(label="Centro de Salud", command=salud)
-menu_superior.add_command(label="Alertas", command= alertas)
+menu_superior.add_command(label="Paciente", command= alertas)
 menu_superior.add_command(label="Salir", command=root.quit)
 menu_superior.config(cursor="hand2")
 

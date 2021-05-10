@@ -2,13 +2,17 @@ from tkinter import *
 from PIL import ImageTk, Image
 
 root=Tk()
-root.geometry("900x500")
+root.geometry("1150x560")
 root.title("Centro de control")
-ventana = Frame(root)
-ventana.config(height=400,width=400,bg="red")
-ventana.place(x=250,y=60)
+alertas = Frame(root)
+alertas.config(height=400,width=400,bg="red")
+alertas.place(x=250,y=60)
+
+despachado = Frame(root)
+despachado.config(height=400,width=400,bg="red")
+despachado.place(x=680,y=60)
+
 def control():
-    imagen = ImageTk.PhotoImage(Image.open("logo.png"))
 
     #panel botones a la izquierda
     btnp=Button(root,text="Aceptar",font=("Verdana",10),height=3,width=6,command=paciente).place(x=10,y=60)

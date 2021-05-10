@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 
 #Definir la ventana
 root=Tk()
@@ -100,7 +101,41 @@ def salud():
     #Ocultar pantallas
     alertas_label.grid_remove()
     alertas_frame.grid_remove()
+    info_label.grid_remove()
+    add_separator.grid_remove()
+    pacientes_table.grid_remove()
+
     return True
+
+def info():
+
+    info_label.config(
+        fg="black",
+        bg="#ccc",
+        font=("Arial", 18),
+        padx=400,
+    )
+
+    info_label.grid(row=0,column=0)
+    add_separator.grid(row=1)
+    pacientes_table.grid(row=2)
+
+
+
+    #Ocultar Pantallas
+
+    alertas_label.grid_remove()
+    alertas_frame.grid_remove()
+    salud_label.grid_remove()
+    salud_frame.grid_remove()
+
+
+    return True
+
+
+
+
+
 
 def alertas():
     alertas_label.config(
@@ -122,6 +157,10 @@ def alertas():
     #Ocultar pantallas
     salud_label.grid_remove()
     salud_frame.grid_remove()
+    info_label.grid_remove()
+    add_separator.grid_remove()
+    pacientes_table.grid_remove()
+
     return True
 
 #Variables pacientes/profesionales
@@ -191,6 +230,24 @@ botonAM=Button(salud_frame,text="Agregar")
 botonEM=Button(salud_frame,text="Eliminar")
 botonBM=Button(salud_frame,text="Buscar")
 
+
+#Campos informacion
+
+info_label = Label(root, text="Informacion")
+
+
+add_separator = Label(root,text="")
+
+
+pacientes_table = ttk.Treeview(height=10, columns = ('#1','#2','#3'))
+pacientes_table.grid(row=4,column=0,columnspan=5)
+pacientes_table.heading("#0",text="Nombre", anchor=W)
+pacientes_table.heading("#1",text="Apellido", anchor=W)
+pacientes_table.heading("#2",text="Numero", anchor=W)
+pacientes_table.heading("#3",text="Sintoma", anchor=W)
+
+
+
 #Opciones ficha medica
 
 salud_ficha_label=Label(salud_frame,      text="Ficha medica")
@@ -233,6 +290,7 @@ salud()
 #Menu superior
 menu_superior= Menu(root)
 menu_superior.add_command(label="Centro de Salud", command=salud)
+menu_superior.add_command(label="Informacion",command=info)
 menu_superior.add_command(label="Paciente", command= alertas)
 menu_superior.add_command(label="Salir", command=root.quit)
 menu_superior.config(cursor="hand2")

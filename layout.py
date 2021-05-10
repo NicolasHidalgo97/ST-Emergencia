@@ -1,8 +1,9 @@
 from tkinter import *
+from tkinter import ttk
 from PIL import ImageTk, Image
 
 root=Tk()
-root.geometry("1150x560")
+root.geometry("1150x650")
 root.title("Centro de control")
 alertas = Frame(root)
 alertas.config(height=400,width=400,bg="red")
@@ -10,10 +11,9 @@ alertas.place(x=250,y=60)
 
 despachado = Frame(root)
 despachado.config(height=400,width=400,bg="red")
-despachado.place(x=680,y=60)
+despachado.place(x=250,y=350)
 
 def control():
-
     #panel botones a la izquierda
     btnp=Button(root,text="Aceptar",font=("Verdana",10),height=3,width=6,command=paciente).place(x=10,y=60)
     btnm=Button(root,text="Aceptar",font=("Verdana",10),height=3,width=6,command=medico).place(x=10,y=140)
@@ -146,7 +146,57 @@ def medico():
     btn_editar=Button(medico,text="Editar",font=("Verdana",10),height=3,width=6).place(x=80,y=300)
     btn_buscar=Button(medico,text="Buscar",font=("Verdana",10),height=3,width=6).place(x=150,y=300)
     btn_eliminar=Button(medico,text="Eliminar",font=("Verdana",10),height=3,width=6).place(x=10,y=380)
-    
+
+def infoAlertas():
+
+    info_label.config(
+        fg="black",
+        bg="#ccc",
+        font=("Arial", 18),
+        padx=400,
+    )
+
+    info_label.grid(row=0,column=0)
+    add_separator.grid(row=1)
+    alertas_table.grid(row=2)
+
+
+    return True
+
+def infoDespacho():
+
+    info_label.config(
+        fg="black",
+        bg="#ccc",
+        font=("Arial", 18),
+        padx=400,
+    )
+
+    info_label.grid(row=0,column=0)
+    add_separator.grid(row=1)
+    alertas_table.grid(row=2)
+
+
+    return True
+
+add_separator = Label(alertas,text="")
+
+alertas_table = ttk.Treeview(alertas,height=10, columns = ('#1','#2','#3'))
+alertas_table.grid(row=4,column=0,columnspan=5)
+alertas_table.heading("#0",text="Nombre", anchor=W)
+alertas_table.heading("#1",text="Apellido", anchor=W)
+alertas_table.heading("#2",text="Numero", anchor=W)
+alertas_table.heading("#3",text="Sintoma", anchor=W)
+
+add_separator = Label(despachado,text="")
+
+despacho_table = ttk.Treeview(despachado,height=10, columns = ('#1','#2','#3'))
+despacho_table.grid(row=4,column=0,columnspan=5)
+despacho_table.heading("#0",text="Nombre", anchor=W)
+despacho_table.heading("#1",text="Apellido", anchor=W)
+despacho_table.heading("#2",text="Numero", anchor=W)
+despacho_table.heading("#3",text="Sintoma", anchor=W)
+
 
 control()
 root.mainloop()

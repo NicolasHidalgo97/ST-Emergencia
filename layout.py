@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from PIL import ImageTk, Image
+#from PIL import ImageTk, Image
 
 root=Tk()
 root.geometry("1150x650")
@@ -196,6 +196,8 @@ despacho_table.heading("#0",text="Nombre", anchor=W)
 despacho_table.heading("#1",text="Apellido", anchor=W)
 despacho_table.heading("#2",text="Numero", anchor=W)
 despacho_table.heading("#3",text="Sintoma", anchor=W)
+
+menu_superior=Menu(root)
 
 
 control()

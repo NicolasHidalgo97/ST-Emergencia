@@ -1,4 +1,7 @@
-class Alerta:
+from Paciente import*
+from Profesional import*
+
+class Alerta(Paciente, Profesional):
 
     #Atributos
     def __init__(self,i,u,p,e,f,h):
@@ -8,6 +11,7 @@ class Alerta:
         self.estado=e
         self.fecha=f
         self.hora=h
+        cola=[]
     
     #Getters Setters
     def getIde(self):

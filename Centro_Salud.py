@@ -8,6 +8,7 @@ class Centro_Salud:
         self.ide=i
         self.nombre=n
         self.direccion=d
+        self.alerta=["caca"]
     #Getters Setters
     def getNombre(self):
         return self.nombre
@@ -15,6 +16,8 @@ class Centro_Salud:
         return self.ide
     def getDireccion(self):
         return self.direccion
+    def getAlerta(self):
+        return self.alerta
 
     def setNombre(self, nombre):
         self.nombre=nombre
@@ -22,6 +25,8 @@ class Centro_Salud:
         self.ide= ide
     def setDireccion(self, direccion):
         self.direccion=direccion
+    def setAlerta(self, alerta):
+        self.alerta=alerta
 
     #Metodos
     def agregarPaciente(self):
@@ -44,3 +49,6 @@ class Centro_Salud:
         return True
     def colaPrioridades(self):
         return True
+
+centro=Centro_Salud(1,2,3)
+print(centro.getId())

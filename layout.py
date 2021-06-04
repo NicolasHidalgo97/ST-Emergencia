@@ -1,6 +1,16 @@
 from tkinter import *
 from tkinter import ttk
+from Centro_Salud import*
+from Alerta import*
+from functools import partial
 #from Pillow import ImageTk, Image
+
+#LISTAS DE ELEMENTOS
+alerta=Alerta(1,"los sauces",1,"pendiente",22,16)
+centro=[]
+paciente=[]
+profesional=[]
+
 
 root=Tk()
 root.geometry("1150x700")
@@ -106,11 +116,12 @@ def paciente():
     entry_longitud.grid(row=9,column=1, padx=5, pady=5,sticky=W)
 
     #BOTONES
-
-    btn_agregar=Button(paciente,text="Agregar",font=("Verdana",10),height=2,width=6, bg="#74C69D").place(x=20,y=300)
+    
+    btn_agregar=Button(paciente,text="Agregar",font=("Verdana",10),height=2,width=6, bg="#74C69D",command=partial(guardarPaciente,nombreP.get())).place(x=20,y=300)
     btn_editar=Button(paciente,text="Editar",font=("Verdana",10),height=2,width=6).place(x=90,y=300)
     btn_buscar=Button(paciente,text="Buscar",font=("Verdana",10),height=2,width=6).place(x=160,y=300)
     btn_eliminar=Button(paciente,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208").place(x=230,y=300)
+
 
 def medico():
     #variables MEDICO
@@ -291,7 +302,7 @@ def estadoAlerta():
     btn_eliminar=Button(estadoAlerta,text="Actualizar",font=("Verdana",10),height=2,width=9,bg="#FAA307").grid(row=10,column=5, padx=5, pady=5, sticky=W)
     btn_eliminar=Button(estadoAlerta,text="Salir",font=("Verdana",10),height=2,width=9,bg="#9D0208").grid(row=10,column=6, padx=5, pady=5, sticky=W)
 
-def infoAlertas():
+""" def infoAlertas():
 
     info_label.config(
         fg="black",
@@ -321,7 +332,7 @@ def infoDespacho():
     alertas_table.grid(row=2)
 
 
-    return True
+    return True """
 
 #Boton Estado de Alerta
 btn_m=Button(inicio,text="Estado de Alerta",foreground="white",font=("Verdana",14),height=2,width=20, bg="#4E85B7",command=estadoAlerta).place(x=610,y=610)
@@ -409,6 +420,10 @@ def pestaña():
     return True
 
 
+def guardarPaciente(Nom):
+    alerta.paciente.setNombre(Nom)
+    print(alerta.paciente.nombre)
+
 menu_superior=Menu(root)
 menu_superior.add_command(label="Centro de salud", command=control)
 menu_superior.add_command(label="Paciente", command=pestaña)
@@ -416,3 +431,5 @@ root.config(menu=menu_superior)
 
 control()
 root.mainloop()
+
+

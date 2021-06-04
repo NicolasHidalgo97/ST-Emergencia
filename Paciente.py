@@ -1,13 +1,14 @@
 from Persona import*
-class Paciente(Persona):
+from ficha import*
+class Paciente(Ficha_Medica):
 
     #Atributos
     def __init__(self,r,n,a,f,fi):
         self.rut=r
-        self.nombre=n
+        self.nombre="miguelito"
         self.apellido=a
         self.fono=f
-        self.ficha=fi
+        self.ficha=Ficha_Medica(1,2,3,4,5)
     #Getters Setters
     def getRut(self):
         return self.rut

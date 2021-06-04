@@ -4,13 +4,15 @@ from Profesional import*
 class Alerta(Paciente, Profesional):
 
     #Atributos
-    def __init__(self,i,u,p,e,f,h):
-        self.ide=i
-        self.ubicacion=u
-        self.prioridad=p
-        self.estado=e
-        self.fecha=f
-        self.hora=h
+    def __init__(self,id,ubicacion,prioridad,estado,fecha,hora):
+        self.id=id
+        self.paciente=Paciente(1,2,3,4,5)
+        self.profesional=Profesional(1,2,3,4)
+        self.ubicacion=ubicacion
+        self.prioridad=prioridad
+        self.estado=estado
+        self.fecha=fecha
+        self.hora=hora
         cola=[]
     
     #Getters Setters
@@ -33,7 +35,7 @@ class Alerta(Paciente, Profesional):
         self.ubicacion=ubicacion
     def setPrioridad(self,prioridad):
         self.prioridad= prioridad
-    def setEstadp(self,estado):
+    def setEstado(self,estado):
         self.estado=estado
     def setFecha(self,fecha):
         self.fecha= fecha
@@ -45,4 +47,3 @@ class Alerta(Paciente, Profesional):
         return True
     def cambiarEstado(self):
         return True
-

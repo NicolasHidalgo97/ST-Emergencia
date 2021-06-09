@@ -5,9 +5,9 @@ class Alerta(Paciente, Profesional):
 
     #Atributos
     def __init__(self,id,ubicacion,prioridad,estado,fecha,hora):
-        self.id=id
-        self.paciente=Paciente(1,2,3,4,5)
+        self.paciente=Paciente(1,"nico","algo","as")
         self.profesional=Profesional(1,2,3,4)
+        self.id=id
         self.ubicacion=ubicacion
         self.prioridad=prioridad
         self.estado=estado
@@ -15,7 +15,7 @@ class Alerta(Paciente, Profesional):
         self.hora=hora
         cola=[]
     
-    #Getters Setters
+    #Getters Settersal
     def getIde(self):
         return self.ide
     def getUbicacion(self):

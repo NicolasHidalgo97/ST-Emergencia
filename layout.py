@@ -1,14 +1,19 @@
 from tkinter import *
 from tkinter import ttk
 from Centro_Salud import*
+from ficha import*
+from Paciente import*
+from Profesional import*
 from Alerta import*
 from functools import partial
 #from Pillow import ImageTk, Image
 
 #LISTAS DE ELEMENTOS
 alerta=Alerta(1,"los sauces",1,"pendiente",22,16)
+pte=Paciente(1,"n","h",123)
+fch=Ficha_Medica("","","",0,0)
 centro=[]
-paciente=[]
+lista_paciente=[]
 profesional=[]
 
 
@@ -117,7 +122,7 @@ def paciente():
 
     #BOTONES
     
-    btn_agregar=Button(paciente,text="Agregar",font=("Verdana",10),height=2,width=6, bg="#74C69D",command=partial(guardarPaciente,nombreP.get())).place(x=20,y=300)
+    btn_agregar=Button(paciente,text="Agregar",font=("Verdana",10),height=2,width=6, bg="#74C69D",command=partial(guardarPaciente,rutP,nombreP,apellidoP,numeroP)).place(x=20,y=300)
     btn_editar=Button(paciente,text="Editar",font=("Verdana",10),height=2,width=6).place(x=90,y=300)
     btn_buscar=Button(paciente,text="Buscar",font=("Verdana",10),height=2,width=6).place(x=160,y=300)
     btn_eliminar=Button(paciente,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208").place(x=230,y=300)
@@ -420,9 +425,12 @@ def pestaña():
     return True
 
 
-def guardarPaciente(Nom):
-    alerta.paciente.setNombre(Nom)
-    print(alerta.paciente.nombre)
+def guardarPaciente(Rut,Nombre,Apellido,Fono):
+    pte.setRut(Rut.get())
+    pte.setNombre(Nombre.get())
+    pte.setApellido(Apellido.get())
+    pte.setFono
+    print(pte.rut,pte.nombre,pte.apellido,pte.fono)
 
 menu_superior=Menu(root)
 menu_superior.add_command(label="Centro de salud", command=control)

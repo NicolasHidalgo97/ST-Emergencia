@@ -1,11 +1,12 @@
-class Profesional:
+class Profesional():
     
     #Atributos
-    def __init__(self,r,n,a,f):
-        self.rut=r
-        self.nombre=n
-        self.apellido=a
-        self.fono=f
+    def __init__(self,Rut,Nombre,Apellido,Fono):
+        super().__init__()
+        self.rut=Rut
+        self.nombre=Nombre
+        self.apellido=Apellido
+        self.fono=Fono
 
     #Getters Setters
     def getRut(self):

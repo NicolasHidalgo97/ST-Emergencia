@@ -3,13 +3,14 @@
 class Ficha_Medica():
 
     #Atributos
-    def __init__(self,condicion,observaciones,direccion,
-                 latitud,longitud):
-        self.condicion=condicion
-        self.observaciones=observaciones
-        self.direccion=direccion
-        self.latitud=latitud
-        self.longitud=longitud
+    def __init__(self,Condicion,Observaciones,Direccion,
+                 Latitud,Longitud):
+        super().__init__()
+        self.condicion=Condicion
+        self.observaciones=Observaciones
+        self.direccion=Direccion
+        self.latitud=Latitud
+        self.longitud=Longitud
     
     def getCondicion(self):
         return self.condicion

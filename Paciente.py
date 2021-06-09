@@ -3,12 +3,13 @@ from ficha import*
 class Paciente(Ficha_Medica):
 
     #Atributos
-    def __init__(self,r,n,a,f,fi):
-        self.rut=r
-        self.nombre="miguelito"
-        self.apellido=a
-        self.fono=f
-        self.ficha=Ficha_Medica(1,2,3,4,5)
+    def __init__(self,Rut,Nombre,Apellido,Fono):
+        super().__init__("","","",0,0)
+        self.rut=Rut
+        self.nombre=Nombre
+        self.apellido=Apellido
+        self.fono=Fono
+        
     #Getters Setters
     def getRut(self):
         return self.rut

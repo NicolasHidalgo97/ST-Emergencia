@@ -11,8 +11,9 @@ from functools import partial
 #LISTAS DE ELEMENTOS
 alerta=Alerta(1,"los sauces",1,"pendiente",22,16)
 pte=Paciente(1,"n","h",123)
+med=Profesional(1,"n","h",123,"esp")
 fch=Ficha_Medica("","","",0,0)
-centro=[]
+lista_alerta=[]
 lista_paciente=[]
 profesional=[]
 
@@ -55,17 +56,13 @@ nombreP=StringVar(value="")
 apellidoP=StringVar(value="")
 numeroP=StringVar(value="")
 rutP=IntVar(value=0)
+#variables ficha medica
+direccionF=StringVar()
+observacionesF=StringVar()
+patologiaF=StringVar()
 
-def paciente(nombreP,apellidoP,numerop,rutP):
+def paciente(nombreP,apellidoP,numerop,rutP,direccionF,observacionesF,patologiaF):
     #variables pacientes
-    
-
-    #variables ficha medica
-
-    direccionF=StringVar()
-    observacionesF=StringVar()
-    patologiaF=StringVar()
-
     paciente = Toplevel()
     paciente.title("Ficha Medica")
     paciente.geometry("310x420")
@@ -124,19 +121,19 @@ def paciente(nombreP,apellidoP,numerop,rutP):
     #BOTONES
     
     
-    btn_agregar=Button(paciente,text="Agregar",font=("Verdana",10),height=2,width=6, bg="#74C69D",command=partial(guardarPaciente,rutP,nombreP,apellidoP,numeroP,direccionF)).place(x=20,y=300)
-    btn_editar=Button(paciente,text="Editar",font=("Verdana",10),height=2,width=6,command=partial(editarPaciente,rutP,nombreP,apellidoP,numeroP,direccionF)).place(x=90,y=300)
-    btn_buscar=Button(paciente,text="Buscar",font=("Verdana",10),height=2,width=6,command=partial(buscarPaciente,rutP,paciente)).place(x=160,y=300)
-    btn_eliminar=Button(paciente,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208").place(x=230,y=300)
-    
+    btn_agregar=Button(paciente,text="Agregar",font=("Verdana",10),height=2,width=6, bg="#74C69D",command=partial(guardarPaciente,rutP,nombreP,apellidoP,numeroP,direccionF,patologiaF,observacionesF)).place(x=20,y=300)
+    btn_editar=Button(paciente,text="Editar",font=("Verdana",10),height=2,width=6,command=partial(editarPaciente,rutP,nombreP,apellidoP,numeroP,direccionF,patologiaF,observacionesF)).place(x=90,y=300)
+    btn_buscar=Button(paciente,text="Buscar",font=("Verdana",10),height=2,width=6,command=partial(buscarPaciente,rutP)).place(x=160,y=300)
+    btn_eliminar=Button(paciente,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208",command=partial(eliminarPaciente,rutP)).place(x=230,y=300)
 
-def medico():
-    #variables MEDICO
-    nombreM=StringVar()
-    apellidoM=StringVar()
-    numeroM=IntVar()
-    rutM=IntVar()
-    especialidad=StringVar()
+#variables MEDICO
+nombreM=StringVar()
+apellidoM=StringVar()
+numeroM=IntVar()
+rutM=IntVar()
+especialidad=StringVar()  
+
+def medico(nombreM,apellidoM,numeroM,rutM,especialidad):
 
     medico = Toplevel()
     medico.title("Agregar Medico")
@@ -177,10 +174,10 @@ def medico():
 
     #BOTONES
 
-    btn_agregar=Button(medico,text="Agregar",font=("Verdana",10),height=2,width=6,bg="#74C69D").place(x=20,y=300)
-    btn_editar=Button(medico,text="Editar",font=("Verdana",10),height=2,width=6).place(x=90,y=300)
-    btn_buscar=Button(medico,text="Buscar",font=("Verdana",10),height=2,width=6).place(x=160,y=300)
-    btn_eliminar=Button(medico,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208").place(x=230,y=300)
+    btn_agregar=Button(medico,text="Agregar",font=("Verdana",10),height=2,width=6,bg="#74C69D",command=partial(agregarMedico,rutM,nombreM,apellidoM,numeroM,especialidad)).place(x=20,y=300)
+    btn_editar=Button(medico,text="Editar",font=("Verdana",10),height=2,width=6,command=partial(editarMedico,rutM,nombreM,apellidoM,numeroM,especialidad)).place(x=90,y=300)
+    btn_buscar=Button(medico,text="Buscar",font=("Verdana",10),height=2,width=6,command=partial(buscarMedico,rutM)).place(x=160,y=300)
+    btn_eliminar=Button(medico,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208",command=partial(eliminarMedico,rutM)).place(x=230,y=300)
 
 def estadoAlerta():
     #variables pacientes
@@ -349,8 +346,8 @@ def control():
     inicio.pack(expand=True, fill='both')
     lbl_tituloBotonera=Label(botonera,text="Administrador",font=("Verdana",14),foreground="white",bg="#41576B").place(x=55,y=15)
 
-    btn_p=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=partial(paciente,nombreP,apellidoP,numeroP,rutP)).place(x=10,y=170)
-    btn_m=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=medico).place(x=10,y=370)
+    btn_p=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=partial(paciente,nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)).place(x=10,y=170)
+    btn_m=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=partial(medico,nombreM,apellidoM,numeroM,rutM,especialidad)).place(x=10,y=370)
 
     btn_EmitirA=Button(botonera,text="Emitir Alerta",font=("Verdana",11),height=2,width=25,bg="#FF0000").place(x=10,y=620)
 
@@ -429,27 +426,32 @@ def pestaña():
     return True
 
 #Funciones para botones pacientes
-def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion):
+def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
     pte.setRut(Rut.get())
     pte.setNombre(Nombre.get())
     pte.setApellido(Apellido.get())
     pte.setFono(Fono.get())
     fch.setDireccion(Direccion.get())
+    fch.setCondicion(Patologia.get())
+    fch.setObservaciones(Observacion.get())
     pte.setFicha(fch)
     lista_paciente.append(pte)
-    print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion)
+    print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion,pte.ficha.condicion,pte.ficha.observaciones)
 
-def buscarPaciente(Rut,Frame):
-        largo=len(lista_paciente)
-        for i in range(largo):
-            nv=lista_paciente[i].rut
-            print(nv,Rut.get())
-            if nv==Rut.get():
-                nombreP.set(lista_paciente[i].nombre)
-                apellidoP.set(lista_paciente[i].apellido)
-                numeroP.set(lista_paciente[i].fono)
+def buscarPaciente(Rut):
+    largo=len(lista_paciente)
+    for i in range(largo):
+        nv=lista_paciente[i].rut
+        print(nv,Rut.get())
+        if nv==Rut.get():
+            nombreP.set(lista_paciente[i].nombre)
+            apellidoP.set(lista_paciente[i].apellido)
+            numeroP.set(lista_paciente[i].fono)
+            direccionF.set(lista_paciente[i].ficha.direccion)
+            observacionesF.set(lista_paciente[i].ficha.observaciones)
+            patologiaF.set(lista_paciente[i].ficha.condicion)
 
-def editarPaciente(Rut,Nombre,Apellido,Fono,Direccion):
+def editarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
     largo=len(lista_paciente)
     for i in range(largo):
         nv=lista_paciente[i].rut
@@ -460,13 +462,60 @@ def editarPaciente(Rut,Nombre,Apellido,Fono,Direccion):
             lista_paciente[i].setApellido(Apellido.get())
             lista_paciente[i].setFono(Fono.get())
             fch.setDireccion(Direccion.get())
+            fch.setCondicion(Patologia.get())
+            fch.setObservaciones(Observacion.get())
             lista_paciente[i].setFicha(fch)
-            print(lista_paciente[i].rut,lista_paciente[i].nombre,lista_paciente[i].apellido,lista_paciente[i].fono,lista_paciente[i].ficha.direccion)
+            print(lista_paciente[i].rut,lista_paciente[i].nombre,lista_paciente[i].apellido,lista_paciente[i].fono,lista_paciente[i].ficha.direccion,lista_paciente[i].ficha.condicion,lista_paciente[i].ficha.observaciones)
 
-def eliminarPaciente():
-    lee="puto"
-                
-                
+def eliminarPaciente(Rut):
+    largo=len(lista_paciente)
+    for i in range(largo):
+        nv=lista_paciente[i].rut
+        print(nv,Rut.get())
+        if nv==Rut.get():
+            lista_paciente.pop(i)
+
+#Funciones para botones medico
+
+def agregarMedico(Rut,Nombre,Apellido,Numero,Especialidad):
+    med.setRut(Rut.get())
+    med.setNombre(Nombre.get())
+    med.setApellido(Apellido.get())
+    med.setFono(Numero.get())
+    med.setEspecialidad(Especialidad.get())
+    profesional.append(med)
+    print(med.rut,med.nombre,med.apellido,med.fono,med.especialidad)
+
+def buscarMedico(Rut):
+    largo=len(profesional)
+    for i in range(largo):
+        nv=profesional[i].rut
+        print(nv,Rut.get())
+        if nv==Rut.get():
+            nombreM.set(profesional[i].nombre)
+            apellidoM.set(profesional[i].apellido)
+            numeroM.set(profesional[i].fono)
+            especialidad.set(profesional[i].especialidad)
+
+def editarMedico(Rut,Nombre,Apellido,Fono,Especialidad):
+    largo=len(profesional)
+    for i in range(largo):
+        nv=profesional[i].rut
+        print(nv,Rut.get())
+        if nv==Rut.get():
+            profesional[i].setNombre(Nombre.get())
+            profesional[i].setApellido(Apellido.get())
+            profesional[i].setFono(Fono.get())
+            profesional[i].setEspecialidad(Especialidad.get())
+
+def eliminarMedico(Rut):
+    largo=len(profesional)
+    for i in range(largo):
+        nv=profesional[i].rut
+        print(nv,Rut.get())
+        if nv==Rut.get():
+            profesional.pop(i)
+
 
 menu_superior=Menu(root)
 menu_superior.add_command(label="Centro de salud", command=control)

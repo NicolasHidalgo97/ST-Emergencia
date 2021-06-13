@@ -1,12 +1,13 @@
 class Profesional():
     
     #Atributos
-    def __init__(self,Rut,Nombre,Apellido,Fono):
+    def __init__(self,Rut,Nombre,Apellido,Fono,Especialidad):
         super().__init__()
         self.rut=Rut
         self.nombre=Nombre
         self.apellido=Apellido
         self.fono=Fono
+        self.especialidad=Especialidad
 
     #Getters Setters
     def getRut(self):
@@ -17,7 +18,9 @@ class Profesional():
         return self.apellido
     def getFono(self):
         return self.fono
-    
+    def getEspecialidad(self):
+        return self.especialidad
+
     def setRut(self,rut):
         self.rut=rut
     def setNombre(self,nombre):
@@ -26,6 +29,8 @@ class Profesional():
         self.apellido=apellido
     def setFono(self, fono):
         self.fono=fono
+    def setEspecialidad(self,especialidad):
+        self.especialidad=especialidad
     
     #Metodos
     def editarFichaMedica(self):

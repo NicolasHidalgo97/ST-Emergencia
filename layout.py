@@ -435,7 +435,6 @@ def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion):
     fch.setDireccion(Direccion.get())
     pte.setFicha(fch)
     lista_paciente.append(pte)
-    rutP=""
     print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion)
 
 def buscarPaciente(Rut,Frame):

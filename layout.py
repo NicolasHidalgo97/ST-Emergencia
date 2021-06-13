@@ -63,8 +63,8 @@ def paciente(nombreP,apellidoP,numerop,rutP):
     #variables ficha medica
 
     direccionF=StringVar()
-    latitudF=IntVar()
-    longitudF=IntVar()
+    observacionesF=StringVar()
+    patologiaF=StringVar()
 
     paciente = Toplevel()
     paciente.title("Ficha Medica")
@@ -103,23 +103,23 @@ def paciente(nombreP,apellidoP,numerop,rutP):
 
     lbl_ficha=Label(paciente,      text="Ficha medica",bg="#41576B",fg="white",font=("Verdena",11))
     lbl_direccion=Label(paciente, text="Direccion :",bg="#41576B",fg="white")
-    lbl_latitud=Label(paciente,   text="Latitud :",bg="#41576B",fg="white")
-    lbl_longitud=Label(paciente,  text="Longitud :",bg="#41576B",fg="white")
+    lbl_observaciones=Label(paciente,   text="Observaciones :",bg="#41576B",fg="white")
+    lbl_patologia=Label(paciente,  text="Patologia :",bg="#41576B",fg="white")
 
     entry_direccion=Entry(paciente,textvariable=direccionF)
-    entry_latitud=Entry(paciente,textvariable=latitudF)
-    entry_longitud=Entry(paciente,textvariable=longitudF)
+    entry_observaciones=Entry(paciente,textvariable=observacionesF)
+    entry_patologia=Entry(paciente,textvariable=patologiaF)
 
     lbl_ficha.grid(row=6,column=1, padx=5, pady=5, sticky=W)
 
     lbl_direccion.grid(row=7,column=0, padx=5, pady=5, sticky=E)
     entry_direccion.grid(row=7,column=1, padx=5, pady=5,sticky=W)
 
-    lbl_latitud.grid(row=8,column=0, padx=5, pady=5, sticky=E)
-    entry_latitud.grid(row=8,column=1, padx=5, pady=5,sticky=W)
+    lbl_observaciones.grid(row=8,column=0, padx=5, pady=5, sticky=E)
+    entry_observaciones.grid(row=8,column=1, padx=5, pady=5,sticky=W)
 
-    lbl_longitud.grid(row=9,column=0, padx=5, pady=5, sticky=E)
-    entry_longitud.grid(row=9,column=1, padx=5, pady=5,sticky=W)
+    lbl_patologia.grid(row=9,column=0, padx=5, pady=5, sticky=E)
+    entry_patologia.grid(row=9,column=1, padx=5, pady=5,sticky=W)
 
     #BOTONES
     
@@ -201,7 +201,7 @@ def estadoAlerta():
     idAlerta=StringVar()
     prioridad=IntVar()
     estado=IntVar()
-    observaciones=StringVar()
+    observacionesF=StringVar()
 
 
 
@@ -352,9 +352,11 @@ def control():
     btn_p=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=partial(paciente,nombreP,apellidoP,numeroP,rutP)).place(x=10,y=170)
     btn_m=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=medico).place(x=10,y=370)
 
+    btn_EmitirA=Button(botonera,text="Emitir Alerta",font=("Verdana",11),height=2,width=25,bg="#FF0000").place(x=10,y=620)
 
     lbl_btnP=Label(botonera,text="Pacientes",font=("Verdana",11),foreground="white",bg="#41576B").place(x=85,y=180)
     lbl_btnM=Label(botonera,text="Medicos",font=("Verdana",11),foreground="white",bg="#41576B").place(x=85,y=380)
+
     
     frm_Paciente.pack_forget()
     

@@ -5,7 +5,7 @@ class Alerta(Paciente, Profesional):
 
     #Atributos
     def __init__(self,id,ubicacion,prioridad,estado,fecha,hora):
-        self.paciente=Paciente(1,"nico","algo","as")
+        self.paciente=Paciente(1,"nico","algo",1)
         self.profesional=Profesional(1,2,3,4)
         self.id=id
         self.ubicacion=ubicacion

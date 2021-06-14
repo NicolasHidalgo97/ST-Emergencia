@@ -28,6 +28,8 @@ class Alerta(Paciente, Profesional):
         return self.fecha
     def getHora(self):
         return self.hora
+    def getPaciente(self):
+        return self.paciente
     
     def setIde(self,ide):
         self.ide= ide
@@ -41,6 +43,8 @@ class Alerta(Paciente, Profesional):
         self.fecha= fecha
     def setHora(self,hora):
         self.hora=hora
+    def setPaciente(self,paciente):
+        self.paciente=paciente
 
     #Metodos
     def getPaciente(self):

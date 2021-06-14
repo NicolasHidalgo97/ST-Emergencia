@@ -6,16 +6,20 @@ from Paciente import*
 from Profesional import*
 from Alerta import*
 from functools import partial
+from random import*
+from datetime import date,datetime
 #from Pillow import ImageTk, Image
 
 #LISTAS DE ELEMENTOS
 alerta=Alerta(1,"los sauces",1,"pendiente",22,16)
+id=1
 pte=Paciente(1,"n","h",123)
 med=Profesional(1,"n","h",123,"esp")
 fch=Ficha_Medica("","","",0,0)
 lista_alerta=[]
 lista_paciente=[]
 profesional=[]
+opc=[]
 
 
 root=Tk()
@@ -349,7 +353,7 @@ def control():
     btn_p=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=partial(paciente,nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)).place(x=10,y=170)
     btn_m=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=partial(medico,nombreM,apellidoM,numeroM,rutM,especialidad)).place(x=10,y=370)
 
-    btn_EmitirA=Button(botonera,text="Emitir Alerta",font=("Verdana",11),height=2,width=25,bg="#FF0000").place(x=10,y=620)
+    btn_EmitirA=Button(botonera,text="Emitir Alerta",font=("Verdana",11),height=2,width=25,bg="#FF0000",command=emitirAlerta).place(x=10,y=620)
 
     lbl_btnP=Label(botonera,text="Pacientes",font=("Verdana",11),foreground="white",bg="#41576B").place(x=85,y=180)
     lbl_btnM=Label(botonera,text="Medicos",font=("Verdana",11),foreground="white",bg="#41576B").place(x=85,y=380)
@@ -516,6 +520,27 @@ def eliminarMedico(Rut):
         if nv==Rut.get():
             profesional.pop(i)
 
+def emitirAlerta():
+    contador=0
+    largo=len(lista_paciente)
+    azar=69
+    prioridad=randint(1,10)
+    id=largo+1
+    alerta.setIde(id+1)
+    if largo>1:
+        azar=randint(0,largo-1)
+        alerta.setPaciente(lista_paciente[azar])
+    elif largo==1:
+        alerta.setPaciente(lista_paciente[0])
+
+    alerta.setPrioridad(prioridad)
+    alerta.setIde(id)
+    alerta.setEstado("Pendiente")
+    alerta.setFecha(date.today())
+    alerta.setHora(datetime.now())
+    alerta.setUbicacion("ubicacion")
+    lista_alerta.append(alerta)
+    print(alerta.prioridad,largo,azar,alerta.hora)
 
 menu_superior=Menu(root)
 menu_superior.add_command(label="Centro de salud", command=control)

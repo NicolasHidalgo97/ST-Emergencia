@@ -20,6 +20,12 @@ lista_paciente=[]
 profesional=[]
 opc=[]
 
+lista_paciente.append(pcte1)
+lista_paciente.append(pcte2)
+lista_paciente.append(pcte3)
+lista_paciente.append(pcte4)
+lista_paciente.append(pcte5)
+
 
 root=Tk()
 root.geometry("1150x700")
@@ -429,8 +435,14 @@ def pestaña():
 
     return True
 
+#Actualiza la tabla de pacientes
+def actualizarTablaPtes():
+    despacho_table.delete(*despacho_table.get_children())
+    for i in range(len(lista_paciente)):
+        despacho_table.insert("",0,text=lista_paciente[i].nombre,values=(lista_paciente[i].apellido))
+
 #Funciones para botones pacientes
-def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
+"""def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
     pte.setRut(Rut.get())
     pte.setNombre(Nombre.get())
     pte.setApellido(Apellido.get())
@@ -447,7 +459,19 @@ def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
     for i in range(largo):
         despacho_table.insert("",0,text=lista_paciente[i].nombre,values=(lista_paciente[i].apellido))
     
-    print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion,pte.ficha.condicion,pte.ficha.observaciones)
+    print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion,pte.ficha.condicion,pte.ficha.observaciones)"""
+
+def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
+    pte.setRut(Rut.get())
+    pte.setNombre(Nombre.get())
+    pte.setApellido(Apellido.get())
+    pte.setFono(Fono.get())
+    fch.setDireccion(Direccion.get())
+    pte.setFicha(fch)
+    lista_paciente.append(pte)
+    rutP=""
+    despacho_table.insert("",0,text=pte.nombre,values=(pte.apellido))
+    print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion)
 
 def buscarPaciente(Rut):
     largo=len(lista_paciente)

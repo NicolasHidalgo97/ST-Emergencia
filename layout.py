@@ -12,7 +12,6 @@ from datetime import date,datetime
 
 #LISTAS DE ELEMENTOS
 alerta=Alerta(1,"los sauces",1,"pendiente",22,16)
-id=1
 pte=Paciente(1,"n","h",123)
 med=Profesional(1,"n","h",123,"esp")
 fch=Ficha_Medica("","","",0,0)
@@ -56,16 +55,16 @@ botonera.config(height=649,width=250,bg="#41576B")
 botonera.pack(fill='y',side="left")
 
 #variables paciente
-nombreP=StringVar(value="")
-apellidoP=StringVar(value="")
-numeroP=StringVar(value="")
-rutP=IntVar(value=0)
+nombreP=StringVar()
+apellidoP=StringVar()
+numeroP=StringVar()
+rutP=IntVar()
 #variables ficha medica
 direccionF=StringVar()
 observacionesF=StringVar()
 patologiaF=StringVar()
 
-def paciente(nombreP,apellidoP,numerop,rutP,direccionF,observacionesF,patologiaF):
+def paciente():
     #variables pacientes
     paciente = Toplevel()
     paciente.title("Ficha Medica")
@@ -350,7 +349,7 @@ def control():
     inicio.pack(expand=True, fill='both')
     lbl_tituloBotonera=Label(botonera,text="Administrador",font=("Verdana",14),foreground="white",bg="#41576B").place(x=55,y=15)
 
-    btn_p=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=partial(paciente,nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)).place(x=10,y=170)
+    btn_p=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=paciente).place(x=10,y=170)
     btn_m=Button(botonera,text=" IR ",font=("Verdana",11),height=2,width=6, bg="#93C2ED",command=partial(medico,nombreM,apellidoM,numeroM,rutM,especialidad)).place(x=10,y=370)
 
     btn_EmitirA=Button(botonera,text="Emitir Alerta",font=("Verdana",11),height=2,width=25,bg="#FF0000",command=emitirAlerta).place(x=10,y=620)
@@ -381,6 +380,7 @@ despacho_table.heading("#0",text="Nombre", anchor=W)
 despacho_table.heading("#1",text="Apellido", anchor=W)
 despacho_table.heading("#2",text="Numero", anchor=W)
 despacho_table.heading("#3",text="Prioridad", anchor=W)
+
 
 
 #Definir campo alertas
@@ -439,7 +439,14 @@ def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
     fch.setCondicion(Patologia.get())
     fch.setObservaciones(Observacion.get())
     pte.setFicha(fch)
+
     lista_paciente.append(pte)
+    
+    largo=len(lista_paciente)
+    despacho_table.delete(*despacho_table.get_children())
+    for i in range(largo):
+        despacho_table.insert("",0,text=lista_paciente[i].nombre,values=(lista_paciente[i].apellido))
+    
     print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion,pte.ficha.condicion,pte.ficha.observaciones)
 
 def buscarPaciente(Rut):

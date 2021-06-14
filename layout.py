@@ -8,6 +8,7 @@ from Alerta import*
 from functools import partial
 from random import*
 from datetime import date,datetime
+from basePacientes import pcte1,pcte2,pcte3,pcte4,pcte5
 #from Pillow import ImageTk, Image
 
 #LISTAS DE ELEMENTOS
@@ -468,9 +469,9 @@ def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
     pte.setFono(Fono.get())
     fch.setDireccion(Direccion.get())
     pte.setFicha(fch)
-    lista_paciente.append(pte)
+    lista_paciente.append(Paciente(Rut.get(),Nombre.get(),Apellido.get(),Fono.get()))
     rutP=""
-    despacho_table.insert("",0,text=pte.nombre,values=(pte.apellido))
+    actualizarTablaPtes()
     print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion)
 
 def buscarPaciente(Rut):

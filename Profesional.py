@@ -37,3 +37,5 @@ class Profesional():
         return True
     def verFicha(self, paciente):
         return True
+    def __str__(self):
+        return self.nombre +" "+ self.apellido

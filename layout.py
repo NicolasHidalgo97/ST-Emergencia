@@ -8,24 +8,32 @@ from Alerta import*
 from functools import partial
 from random import*
 from datetime import date,datetime
-from basePacientes import pcte1,pcte2,pcte3,pcte4,pcte5
+from basePacientes import *
+
 #from Pillow import ImageTk, Image
 
 #LISTAS DE ELEMENTOS
 alerta=Alerta(1,"los sauces",1,"pendiente",22,16)
-pte=Paciente(1,"n","h",123)
-med=Profesional(1,"n","h",123,"esp")
+pte=Paciente(1,"vacio","h",123)
+med=Profesional(1,"vacio","h",123,"esp")
 fch=Ficha_Medica("","","",0,0)
 lista_alerta=[]
 lista_paciente=[]
 profesional=[]
 opc=[]
 
+#   Llenando listas
 lista_paciente.append(pcte1)
 lista_paciente.append(pcte2)
 lista_paciente.append(pcte3)
 lista_paciente.append(pcte4)
 lista_paciente.append(pcte5)
+
+profesional.append(med1)
+profesional.append(med2)
+profesional.append(med3)
+profesional.append(med4)
+profesional.append(med5)
 
 
 root=Tk()
@@ -70,6 +78,19 @@ rutP=IntVar()
 direccionF=StringVar()
 observacionesF=StringVar()
 patologiaF=StringVar()
+
+#variables MEDICO
+nombreM=StringVar()
+apellidoM=StringVar()
+numeroM=IntVar()
+rutM=IntVar()
+especialidad=StringVar() 
+
+#   variables  ESTADOALERTA
+
+rutMed=IntVar()
+fonoMed=IntVar()
+menuMedico=med
 
 def paciente():
     #variables pacientes
@@ -136,12 +157,7 @@ def paciente():
     btn_buscar=Button(paciente,text="Buscar",font=("Verdana",10),height=2,width=6,command=partial(buscarPaciente,rutP)).place(x=160,y=300)
     btn_eliminar=Button(paciente,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208",command=partial(eliminarPaciente,rutP)).place(x=230,y=300)
 
-#variables MEDICO
-nombreM=StringVar()
-apellidoM=StringVar()
-numeroM=IntVar()
-rutM=IntVar()
-especialidad=StringVar()  
+ 
 
 def medico(nombreM,apellidoM,numeroM,rutM,especialidad):
 
@@ -189,21 +205,14 @@ def medico(nombreM,apellidoM,numeroM,rutM,especialidad):
     btn_buscar=Button(medico,text="Buscar",font=("Verdana",10),height=2,width=6,command=partial(buscarMedico,rutM)).place(x=160,y=300)
     btn_eliminar=Button(medico,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208",command=partial(eliminarMedico,rutM)).place(x=230,y=300)
 
-def estadoAlerta():
+def estadoAlerta(numeroM,rutM,especialidad):
     #variables pacientes
     nombreP=StringVar()
     apellidoP=StringVar()
     numeroP=IntVar()
     rutP=IntVar()
 
-    #variables ficha medica
-
-    nombreMed=StringVar()
-    apellidoMed=StringVar()
-    rutMed=IntVar()
-    especialidad=StringVar()
-
-    #variables Alerta
+   #variables Alerta
 
     idAlerta=StringVar()
     prioridad=IntVar()
@@ -216,6 +225,9 @@ def estadoAlerta():
     estadoAlerta.title("Estado de Alerta")
     estadoAlerta.geometry("700x420")
     estadoAlerta.config(bg="#41576B")
+
+
+
 
     #Campos PACIENTE
 
@@ -250,35 +262,38 @@ def estadoAlerta():
     #Campos MEDICO
 
     lbl_ficha=Label(estadoAlerta,      text="Medico Asignado",bg="#41576B",fg="white",font=("Verdena",11))
-    lbl_direccion=Label(estadoAlerta, text="Direccion :",bg="#41576B",fg="white")
-    lbl_latitud=Label(estadoAlerta,   text="Latitud :",bg="#41576B",fg="white")
-    lbl_rutMed=Label(estadoAlerta,  text="Longitud :",bg="#41576B",fg="white")
+    lbl_Medico=Label(estadoAlerta,  text="Medico :",bg="#41576B",fg="white")
 
 
-    lbl_nombreMed=Label(estadoAlerta,   text="Nombre :",bg="#41576B",fg="white")
-    lbl_apellidoMed=Label(estadoAlerta, text="Apellido :",bg="#41576B",fg="white")
-    lbl_rutMed=Label(estadoAlerta,      text="Rut :",bg="#41576B",fg="white")
-    lbl_especialidad=Label(estadoAlerta,      text="Especialidad :",bg="#41576B",fg="white")
+    lbl_rutMed=Label(estadoAlerta,   text="Rut :",bg="#41576B",fg="white")
+    lbl_especialidad=Label(estadoAlerta, text="Especialidad :",bg="#41576B",fg="white")
+    lbl_fonoMed=Label(estadoAlerta, text="Fono :",bg="#41576B",fg="white")
 
-    entry_nombreMed=Entry(estadoAlerta,textvariable=nombreMed)
-    entry_apellidoMed=Entry(estadoAlerta,textvariable=apellidoMed)
-    entry_rutMed=Entry(estadoAlerta,textvariable=rutMed)
+    entry_rutMed=Entry(estadoAlerta,textvariable=rutM)
+    entry_fonoMed=Entry(estadoAlerta,textvariable=numeroM)
+    #entry_rutMed=Entry(estadoAlerta,textvariable=rutMed)
     entry_especialidad=Entry(estadoAlerta,textvariable=especialidad)
 
+    # MENU DESPLEGABLE MEDICOS
+    menuMedicos= med
+    rutAux=menuMedico.rut
+    select = OptionMenu(estadoAlerta,menuMedicos, *profesional,command=partial(buscarMedico,rutAux))
+
     #Posicion campos MEDICO
+
     lbl_ficha.grid(row=6,column=1, padx=5, pady=5, sticky=W)
 
-    lbl_rutMed.grid(row=7,column=0, padx=5, pady=5, sticky=E)
-    entry_rutMed.grid(row=7,column=1, padx=5, pady=5,sticky=W)
+    lbl_Medico.grid(row=7,column=0, padx=5, pady=5, sticky=E)
+    select.grid(row=7,column=1, padx=5, pady=5,sticky=W)
 
-    lbl_nombreMed.grid(row=8,column=0, padx=5, pady=5, sticky=E)
-    entry_nombreMed.grid(row=8,column=1, padx=5, pady=5,sticky=W)
+    lbl_rutMed.grid(row=8,column=0, padx=5, pady=5, sticky=E)
+    entry_rutMed.grid(row=8,column=1, padx=5, pady=5,sticky=W)
 
-    lbl_apellidoMed.grid(row=9,column=0, padx=5, pady=5, sticky=E)
-    entry_apellidoMed.grid(row=9,column=1, padx=5, pady=5,sticky=W)
+    lbl_especialidad.grid(row=9,column=0, padx=5, pady=5, sticky=E)
+    entry_especialidad.grid(row=9,column=1, padx=5, pady=5,sticky=W)
 
-    lbl_especialidad.grid(row=10,column=0, padx=5, pady=5, sticky=E)
-    entry_especialidad.grid(row=10,column=1, padx=5, pady=5,sticky=W)
+    lbl_fonoMed.grid(row=10,column=0, padx=5, pady=5, sticky=E)
+    entry_fonoMed.grid(row=10,column=1, padx=5, pady=5,sticky=W)
 
     #Campos ALERTA
 
@@ -310,46 +325,16 @@ def estadoAlerta():
     entry_observaciones.grid(row=5,column=5, padx=5, pady=5,sticky=W)
 
 
+        
 
     #BOTONES
 
     btn_eliminar=Button(estadoAlerta,text="Actualizar",font=("Verdana",10),height=2,width=9,bg="#FAA307").grid(row=10,column=5, padx=5, pady=5, sticky=W)
     btn_eliminar=Button(estadoAlerta,text="Salir",font=("Verdana",10),height=2,width=9,bg="#9D0208").grid(row=10,column=6, padx=5, pady=5, sticky=W)
 
-""" def infoAlertas():
-
-    info_label.config(
-        fg="black",
-        bg="#ccc",
-        font=("Arial", 18),
-        padx=400,
-    )
-
-    info_label.grid(row=0,column=0)
-    add_separator.grid(row=1)
-    alertas_table.grid(row=2)
-
-
-    return True
-
-def infoDespacho():
-
-    info_label.config(
-        fg="black",
-        bg="#ccc",
-        font=("Arial", 18),
-        padx=400,
-    )
-
-    info_label.grid(row=0,column=0)
-    add_separator.grid(row=1)
-    alertas_table.grid(row=2)
-
-
-    return True """
 
 #Boton Estado de Alerta
-btn_m=Button(inicio,text="Estado de Alerta",foreground="white",font=("Verdana",14),height=2,width=20, bg="#4E85B7",command=estadoAlerta).place(x=610,y=610)
+btn_m=Button(inicio,text="Estado de Alerta",foreground="white",font=("Verdana",14),height=2,width=20, bg="#4E85B7",command=partial(estadoAlerta,numeroM,rutM,especialidad)).place(x=610,y=610)
 
 #Controlador Botonera
 def control():
@@ -435,36 +420,8 @@ def pestaña():
 
     return True
 
-#Actualiza la tabla de pacientes
-def actualizarTablaPtes():
-    pacientes_table.delete(*pacientes_table.get_children())
-    for i in range(len(lista_paciente)):
-        pacientes_table.insert("",0,text=lista_paciente[i].rut,values=(lista_paciente[i].nombre,lista_paciente[i].apellido))
-
-def actualizarTablaAlertas():
-    alertas_table.delete(*alertas_table.get_children())
-    for i in range(len(lista_alerta)):
-        alertas_table.insert("",0,text=lista_alerta[i].id,values=(lista_alerta[i].paciente.apellido,lista_alerta[i].profesional.apellido,lista_alerta[i].prioridad))
 
 #Funciones para botones pacientes
-"""def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
-    pte.setRut(Rut.get())
-    pte.setNombre(Nombre.get())
-    pte.setApellido(Apellido.get())
-    pte.setFono(Fono.get())
-    fch.setDireccion(Direccion.get())
-    fch.setCondicion(Patologia.get())
-    fch.setObservaciones(Observacion.get())
-    pte.setFicha(fch)
-
-    lista_paciente.append(pte)
-    
-    largo=len(lista_paciente)
-    despacho_table.delete(*despacho_table.get_children())
-    for i in range(largo):
-        despacho_table.insert("",0,text=lista_paciente[i].nombre,values=(lista_paciente[i].apellido))
-    
-    print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion,pte.ficha.condicion,pte.ficha.observaciones)"""
 
 def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
     lista_paciente.append(Paciente(Rut.get(),Nombre.get(),Apellido.get(),Fono.get()))
@@ -563,7 +520,7 @@ def emitirAlerta():
     elif largo==1:
         alerta.setPaciente(lista_paciente[0])
         alerta.setPrioridad(prioridad)
-        alerta.setIde(id)
+   #     alerta.setIde(id)
         alerta.setEstado("Pendiente")
         alerta.setFecha(date.today())
         alerta.setHora(datetime.now())

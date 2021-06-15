@@ -41,7 +41,7 @@ frm_Paciente.pack(expand=True, fill='both')
 
 #Frame que contiene a la tabla PENDIENTES
 alertas = Frame(inicio)
-lbl_tablaPendientes = Label(inicio, text="Alertas Pendientes", font=("Verdana",13), bg="#CEE1F2")
+lbl_tablaPendientes = Label(inicio, text="Estado Pacientes", font=("Verdana",13), bg="#CEE1F2")
 lbl_tablaPendientes.place(x=610,y=10)
 lbl_tablaPendientes.config()
 alertas.config(height=400,width=400)
@@ -371,23 +371,22 @@ def control():
 #add_separator = Label(alertas,text="")
 #lbl_titulo = Label(alertas,text="HOLAMUNDO")
 #lbl_titulo.grid
-#tabla alertas 
-alertas_table = ttk.Treeview(alertas,height=10, columns = ('#1','#2','#3'))
-alertas_table.grid(row=4,column=0,columnspan=5)
-alertas_table.heading("#0",text="Nombre", anchor=W)
-alertas_table.heading("#1",text="Apellido", anchor=W)
-alertas_table.heading("#2",text="Numero", anchor=W)
-alertas_table.heading("#3",text="Prioridad", anchor=W)
+#       TABLA Pacientes 
+pacientes_table = ttk.Treeview(alertas,height=10, columns = ('#1','#2','#3'))
+pacientes_table.grid(row=4,column=0,columnspan=5)
+pacientes_table.heading("#0",text="RUT", anchor=W)
+pacientes_table.heading("#1",text="NOMBRE", anchor=W)
+pacientes_table.heading("#2",text="APELLIDO", anchor=W)
+pacientes_table.heading("#3",text="ESTADO", anchor=W)
 
 #add_separator = Label(despachado,text="")
 
-despacho_table = ttk.Treeview(despachado,height=10, columns = ('#1','#2','#3'))
-despacho_table.grid(row=4,column=0,columnspan=5)
-despacho_table.heading("#0",text="Nombre", anchor=W)
-despacho_table.heading("#1",text="Apellido", anchor=W)
-despacho_table.heading("#2",text="Numero", anchor=W)
-despacho_table.heading("#3",text="Prioridad", anchor=W)
-
+alertas_table = ttk.Treeview(despachado,height=10, columns = ('#1','#2','#3'))
+alertas_table.grid(row=4,column=0,columnspan=5)
+alertas_table.heading("#0",text="ID", anchor=W)
+alertas_table.heading("#1",text="PACIENTE", anchor=W)
+alertas_table.heading("#2",text="MEDICO", anchor=W)
+alertas_table.heading("#3",text="PRIORIDAD", anchor=W)
 
 
 #Definir campo alertas
@@ -438,9 +437,14 @@ def pestaña():
 
 #Actualiza la tabla de pacientes
 def actualizarTablaPtes():
-    despacho_table.delete(*despacho_table.get_children())
+    pacientes_table.delete(*pacientes_table.get_children())
     for i in range(len(lista_paciente)):
-        despacho_table.insert("",0,text=lista_paciente[i].nombre,values=(lista_paciente[i].apellido))
+        pacientes_table.insert("",0,text=lista_paciente[i].rut,values=(lista_paciente[i].nombre,lista_paciente[i].apellido))
+
+def actualizarTablaAlertas():
+    alertas_table.delete(*alertas_table.get_children())
+    for i in range(len(lista_alerta)):
+        alertas_table.insert("",0,text=lista_alerta[i].id,values=(lista_alerta[i].paciente.apellido,lista_alerta[i].profesional.apellido,lista_alerta[i].prioridad))
 
 #Funciones para botones pacientes
 """def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
@@ -463,16 +467,12 @@ def actualizarTablaPtes():
     print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion,pte.ficha.condicion,pte.ficha.observaciones)"""
 
 def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
-    pte.setRut(Rut.get())
-    pte.setNombre(Nombre.get())
-    pte.setApellido(Apellido.get())
-    pte.setFono(Fono.get())
-    fch.setDireccion(Direccion.get())
-    pte.setFicha(fch)
     lista_paciente.append(Paciente(Rut.get(),Nombre.get(),Apellido.get(),Fono.get()))
+    largo=len(lista_paciente)-1
+    lista_paciente[largo].setFicha(Ficha_Medica(Patologia.get(),Observacion.get(),Direccion.get(),0,0))
     rutP=""
     actualizarTablaPtes()
-    print(pte.rut,pte.nombre,pte.apellido,pte.fono,pte.ficha.direccion)
+    print(lista_paciente[largo].rut)
 
 def buscarPaciente(Rut):
     largo=len(lista_paciente)
@@ -497,30 +497,20 @@ def editarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
             lista_paciente[i].setNombre(Nombre.get())
             lista_paciente[i].setApellido(Apellido.get())
             lista_paciente[i].setFono(Fono.get())
-            fch.setDireccion(Direccion.get())
-            fch.setCondicion(Patologia.get())
-            fch.setObservaciones(Observacion.get())
-            lista_paciente[i].setFicha(fch)
+            lista_paciente[i].setFicha(Ficha_Medica(Patologia.get(),Observacion.get(),Direccion.get(),0,0))
+            actualizarTablaPtes()
             print(lista_paciente[i].rut,lista_paciente[i].nombre,lista_paciente[i].apellido,lista_paciente[i].fono,lista_paciente[i].ficha.direccion,lista_paciente[i].ficha.condicion,lista_paciente[i].ficha.observaciones)
 
 def eliminarPaciente(Rut):
-    largo=len(lista_paciente)
-    for i in range(largo):
-        nv=lista_paciente[i].rut
-        print(nv,Rut.get())
-        if nv==Rut.get():
-            lista_paciente.pop(i)
+    for i in lista_paciente:
+        if i.rut==Rut.get():
+            lista_paciente.remove(i)
+            actualizarTablaPtes()
 
 #Funciones para botones medico
 
 def agregarMedico(Rut,Nombre,Apellido,Numero,Especialidad):
-    med.setRut(Rut.get())
-    med.setNombre(Nombre.get())
-    med.setApellido(Apellido.get())
-    med.setFono(Numero.get())
-    med.setEspecialidad(Especialidad.get())
-    profesional.append(med)
-    print(med.rut,med.nombre,med.apellido,med.fono,med.especialidad)
+    profesional.append(Profesional(Rut.get(),Nombre.get(),Apellido.get(),Numero.get(),Especialidad.get()))
 
 def buscarMedico(Rut):
     largo=len(profesional)
@@ -545,33 +535,44 @@ def editarMedico(Rut,Nombre,Apellido,Fono,Especialidad):
             profesional[i].setEspecialidad(Especialidad.get())
 
 def eliminarMedico(Rut):
-    largo=len(profesional)
-    for i in range(largo):
-        nv=profesional[i].rut
-        print(nv,Rut.get())
-        if nv==Rut.get():
-            profesional.pop(i)
+    for i in Profesional:
+        if i.rut==Rut.get():
+            Profesional.remove(i)
+            actualizarTablaPtes()
 
 def emitirAlerta():
     contador=0
     largo=len(lista_paciente)
     azar=69
     prioridad=randint(1,10)
-    id=largo+1
-    alerta.setIde(id+1)
     if largo>1:
+        id=len(lista_alerta)+1
         azar=randint(0,largo-1)
         alerta.setPaciente(lista_paciente[azar])
+        alerta.setPrioridad(prioridad)
+        alerta.setIde(id)
+        alerta.setEstado("Pendiente")
+        alerta.setFecha(date.today())
+        alerta.setHora(datetime.now())
+        alerta.setUbicacion("ubicacion")
+        lista_alerta.append(Alerta(id,"ubicacion",prioridad,"Pendiente",date.today(),datetime.now()))
+        lg=len(lista_alerta)-1
+        lista_alerta[lg].setPaciente(lista_paciente[azar])
+        actualizarTablaAlertas()
+
     elif largo==1:
         alerta.setPaciente(lista_paciente[0])
-
-    alerta.setPrioridad(prioridad)
-    alerta.setIde(id)
-    alerta.setEstado("Pendiente")
-    alerta.setFecha(date.today())
-    alerta.setHora(datetime.now())
-    alerta.setUbicacion("ubicacion")
-    lista_alerta.append(alerta)
+        alerta.setPrioridad(prioridad)
+        alerta.setIde(id)
+        alerta.setEstado("Pendiente")
+        alerta.setFecha(date.today())
+        alerta.setHora(datetime.now())
+        alerta.setUbicacion("ubicacion")
+        lista_alerta.append(Alerta(1,"ubicacion",prioridad,"Pendiente",date.today(),datetime.now()))
+        lg=len(lista_alerta)-1
+        lista_alerta[lg].setPaciente(lista_paciente[0])
+        actualizarTablaAlertas()
+    
     print(alerta.prioridad,largo,azar,alerta.hora)
 
 menu_superior=Menu(root)

@@ -263,7 +263,7 @@ def estadoAlerta():
 
     entry_nombreMed=Entry(estadoAlerta,textvariable=nombreMed)
     entry_apellidoMed=Entry(estadoAlerta,textvariable=apellidoMed)
-    entry_rutMed=Entry(estadoAlerta,textvariable=rutMed)
+    entry_rutMed=Entry(estadoAlerta,textvapaciente_listariable=rutMed)
     entry_especialidad=Entry(estadoAlerta,textvariable=especialidad)
 
     #Posicion campos MEDICO

@@ -5,6 +5,7 @@ class Paciente(Ficha_Medica):
     #Atributos
     def __init__(self,Rut,Nombre,Apellido,Fono):
         super().__init__("","","",0,0)
+        self.ficha=Ficha_Medica("","","",0,0)
         self.rut=Rut
         self.nombre=Nombre
         self.apellido=Apellido

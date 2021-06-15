@@ -157,7 +157,49 @@ def paciente():
     btn_buscar=Button(paciente,text="Buscar",font=("Verdana",10),height=2,width=6,command=partial(buscarPaciente,rutP)).place(x=160,y=300)
     btn_eliminar=Button(paciente,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208",command=partial(eliminarPaciente,rutP)).place(x=230,y=300)
 
- 
+ #Funciones para botones pacientes
+
+def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
+    lista_paciente.append(Paciente(Rut.get(),Nombre.get(),Apellido.get(),Fono.get()))
+    largo=len(lista_paciente)-1
+    lista_paciente[largo].setFicha(Ficha_Medica(Patologia.get(),Observacion.get(),Direccion.get(),0,0))
+    rutP=""
+    actualizarTablaPtes()
+    print(lista_paciente[largo].rut)
+
+def buscarPaciente(Rut):
+    largo=len(lista_paciente)
+    for i in range(largo):
+        nv=lista_paciente[i].rut
+        print(nv,Rut.get())
+        if nv==Rut.get():
+            nombreP.set(lista_paciente[i].nombre)
+            apellidoP.set(lista_paciente[i].apellido)
+            numeroP.set(lista_paciente[i].fono)
+            direccionF.set(lista_paciente[i].ficha.direccion)
+            observacionesF.set(lista_paciente[i].ficha.observaciones)
+            patologiaF.set(lista_paciente[i].ficha.condicion)
+
+def editarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
+    largo=len(lista_paciente)
+    for i in range(largo):
+        nv=lista_paciente[i].rut
+        print(nv,Rut.get())
+        if nv==Rut.get():
+            lista_paciente[i].setRut(Rut.get())
+            lista_paciente[i].setNombre(Nombre.get())
+            lista_paciente[i].setApellido(Apellido.get())
+            lista_paciente[i].setFono(Fono.get())
+            lista_paciente[i].setFicha(Ficha_Medica(Patologia.get(),Observacion.get(),Direccion.get(),0,0))
+            actualizarTablaPtes()
+            print(lista_paciente[i].rut,lista_paciente[i].nombre,lista_paciente[i].apellido,lista_paciente[i].fono,lista_paciente[i].ficha.direccion,lista_paciente[i].ficha.condicion,lista_paciente[i].ficha.observaciones)
+
+def eliminarPaciente(Rut):
+    for i in lista_paciente:
+        if i.rut==Rut.get():
+            lista_paciente.remove(i)
+            actualizarTablaPtes()
+
 
 def medico(nombreM,apellidoM,numeroM,rutM,especialidad):
 
@@ -204,6 +246,40 @@ def medico(nombreM,apellidoM,numeroM,rutM,especialidad):
     btn_editar=Button(medico,text="Editar",font=("Verdana",10),height=2,width=6,command=partial(editarMedico,rutM,nombreM,apellidoM,numeroM,especialidad)).place(x=90,y=300)
     btn_buscar=Button(medico,text="Buscar",font=("Verdana",10),height=2,width=6,command=partial(buscarMedico,rutM)).place(x=160,y=300)
     btn_eliminar=Button(medico,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208",command=partial(eliminarMedico,rutM)).place(x=230,y=300)
+
+#Funciones para botones medico
+
+def agregarMedico(Rut,Nombre,Apellido,Numero,Especialidad):
+    profesional.append(Profesional(Rut.get(),Nombre.get(),Apellido.get(),Numero.get(),Especialidad.get()))
+
+def buscarMedico(Rut):
+    largo=len(profesional)
+    for i in range(largo):
+        nv=profesional[i].rut
+        print(nv,Rut.get())
+        if nv==Rut.get():
+            nombreM.set(profesional[i].nombre)
+            apellidoM.set(profesional[i].apellido)
+            numeroM.set(profesional[i].fono)
+            especialidad.set(profesional[i].especialidad)
+
+def editarMedico(Rut,Nombre,Apellido,Fono,Especialidad):
+    largo=len(profesional)
+    for i in range(largo):
+        nv=profesional[i].rut
+        print(nv,Rut.get())
+        if nv==Rut.get():
+            profesional[i].setNombre(Nombre.get())
+            profesional[i].setApellido(Apellido.get())
+            profesional[i].setFono(Fono.get())
+            profesional[i].setEspecialidad(Especialidad.get())
+
+def eliminarMedico(Rut):
+    for i in Profesional:
+        if i.rut==Rut.get():
+            Profesional.remove(i)
+            actualizarTablaPtes()
+
 
 def estadoAlerta(numeroM,rutM,especialidad):
     #variables pacientes
@@ -353,10 +429,8 @@ def control():
     frm_Paciente.pack_forget()
     
 
-#add_separator = Label(alertas,text="")
-#lbl_titulo = Label(alertas,text="HOLAMUNDO")
-#lbl_titulo.grid
-#       TABLA Pacientes 
+
+#TABLA Pacientes 
 pacientes_table = ttk.Treeview(alertas,height=10, columns = ('#1','#2','#3'))
 pacientes_table.grid(row=4,column=0,columnspan=5)
 pacientes_table.heading("#0",text="RUT", anchor=W)
@@ -364,7 +438,7 @@ pacientes_table.heading("#1",text="NOMBRE", anchor=W)
 pacientes_table.heading("#2",text="APELLIDO", anchor=W)
 pacientes_table.heading("#3",text="ESTADO", anchor=W)
 
-#add_separator = Label(despachado,text="")
+#Tabla Alertas
 
 alertas_table = ttk.Treeview(despachado,height=10, columns = ('#1','#2','#3'))
 alertas_table.grid(row=4,column=0,columnspan=5)
@@ -377,7 +451,16 @@ alertas_table.heading("#3",text="PRIORIDAD", anchor=W)
 #Definir campo alertas
 alertas_label= Label(root, text="Paciente")
 
+#Actualiza la tabla de pacientes
+def actualizarTablaPtes():
+    pacientes_table.delete(*pacientes_table.get_children())
+    for i in range(len(lista_paciente)):
+        pacientes_table.insert("",0,text=lista_paciente[i].rut,values=(lista_paciente[i].nombre,lista_paciente[i].apellido))
 
+def actualizarTablaAlertas():
+    alertas_table.delete(*alertas_table.get_children())
+    for i in range(len(lista_alerta)):
+        alertas_table.insert("",0,text=lista_alerta[i].id,values=(lista_alerta[i].paciente.apellido,lista_alerta[i].profesional.apellido,lista_alerta[i].prioridad))
 
 #Variables Paciente
 nomPa=StringVar()
@@ -391,111 +474,6 @@ alertas_paciente_n_entry=Entry(alertas_frame,textvariable=nomPa)
 botonRut=Button(alertas_frame,text="Buscar")
 botonAlerta=Button(alertas_frame, text="Emitir Alerta")
 
-def pestaña():
-    frm_Paciente.pack(expand=True, fill='both') 
-    #Opciones del paciente
-    #Agregar clases para entrega 2
-    rutPa=""
-    nom=""
-    ap=""
-    te=""
-    lbl_Paciente=Label(frm_Paciente,text="PACIENTE",font=("Arial",24),bg="Gray").place(x=510,y=10)
-    lbl_Rut=Label(frm_Paciente,          text="RUT :",font=("Verdana",12),bg="Gray").place(x=100,y=140)
-    btn_EmitirAlerta=Button(frm_Paciente,text="Emitir Alerta",font=("Verdana",18),height=2,width=10,bg="red").place(x=840,y=300)
-    btn_Buscar=Button(frm_Paciente,text="Buscar",font=("Verdana",11),height=1,width=6).place(x=350,y=140)
-    entry_rut=Entry(frm_Paciente,textvariable=rutPa).place(x=180,y=143)
-    lbl_No=Label(frm_Paciente,          text="Nombre :",font=("Verdana",12),bg="Gray").place(x=100,y=200)
-    lbl_Ap=Label(frm_Paciente,          text="Apellido :",font=("Verdana",12),bg="Gray").place(x=100,y=250)
-    lbl_Te=Label(frm_Paciente,          text="Telefono :",font=("Verdana",12),bg="Gray").place(x=100,y=300)
-    entry_Nom=Entry(frm_Paciente,textvariable=nom).place(x=200,y=200)
-    entry_Ap=Entry(frm_Paciente,textvariable=ap).place(x=200,y=250)
-    entry_Te=Entry(frm_Paciente,textvariable=te).place(x=200,y=300)
-    lbl_Fi=Label(frm_Paciente,          text="Comentarios :",font=("Verdana",12),bg="Gray").place(x=450,y=140)
-    ficha=Text(frm_Paciente, height=10,width=30).place(x=450,y=200)
-
-
-
-    #Ocultar pantallas
-    inicio.pack_forget()
-
-    return True
-
-
-#Funciones para botones pacientes
-
-def guardarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
-    lista_paciente.append(Paciente(Rut.get(),Nombre.get(),Apellido.get(),Fono.get()))
-    largo=len(lista_paciente)-1
-    lista_paciente[largo].setFicha(Ficha_Medica(Patologia.get(),Observacion.get(),Direccion.get(),0,0))
-    rutP=""
-    actualizarTablaPtes()
-    print(lista_paciente[largo].rut)
-
-def buscarPaciente(Rut):
-    largo=len(lista_paciente)
-    for i in range(largo):
-        nv=lista_paciente[i].rut
-        print(nv,Rut.get())
-        if nv==Rut.get():
-            nombreP.set(lista_paciente[i].nombre)
-            apellidoP.set(lista_paciente[i].apellido)
-            numeroP.set(lista_paciente[i].fono)
-            direccionF.set(lista_paciente[i].ficha.direccion)
-            observacionesF.set(lista_paciente[i].ficha.observaciones)
-            patologiaF.set(lista_paciente[i].ficha.condicion)
-
-def editarPaciente(Rut,Nombre,Apellido,Fono,Direccion,Patologia,Observacion):
-    largo=len(lista_paciente)
-    for i in range(largo):
-        nv=lista_paciente[i].rut
-        print(nv,Rut.get())
-        if nv==Rut.get():
-            lista_paciente[i].setRut(Rut.get())
-            lista_paciente[i].setNombre(Nombre.get())
-            lista_paciente[i].setApellido(Apellido.get())
-            lista_paciente[i].setFono(Fono.get())
-            lista_paciente[i].setFicha(Ficha_Medica(Patologia.get(),Observacion.get(),Direccion.get(),0,0))
-            actualizarTablaPtes()
-            print(lista_paciente[i].rut,lista_paciente[i].nombre,lista_paciente[i].apellido,lista_paciente[i].fono,lista_paciente[i].ficha.direccion,lista_paciente[i].ficha.condicion,lista_paciente[i].ficha.observaciones)
-
-def eliminarPaciente(Rut):
-    for i in lista_paciente:
-        if i.rut==Rut.get():
-            lista_paciente.remove(i)
-            actualizarTablaPtes()
-
-#Funciones para botones medico
-
-def agregarMedico(Rut,Nombre,Apellido,Numero,Especialidad):
-    profesional.append(Profesional(Rut.get(),Nombre.get(),Apellido.get(),Numero.get(),Especialidad.get()))
-
-def buscarMedico(Rut):
-    largo=len(profesional)
-    for i in range(largo):
-        nv=profesional[i].rut
-        print(nv,Rut.get())
-        if nv==Rut.get():
-            nombreM.set(profesional[i].nombre)
-            apellidoM.set(profesional[i].apellido)
-            numeroM.set(profesional[i].fono)
-            especialidad.set(profesional[i].especialidad)
-
-def editarMedico(Rut,Nombre,Apellido,Fono,Especialidad):
-    largo=len(profesional)
-    for i in range(largo):
-        nv=profesional[i].rut
-        print(nv,Rut.get())
-        if nv==Rut.get():
-            profesional[i].setNombre(Nombre.get())
-            profesional[i].setApellido(Apellido.get())
-            profesional[i].setFono(Fono.get())
-            profesional[i].setEspecialidad(Especialidad.get())
-
-def eliminarMedico(Rut):
-    for i in Profesional:
-        if i.rut==Rut.get():
-            Profesional.remove(i)
-            actualizarTablaPtes()
 
 def emitirAlerta():
     contador=0
@@ -534,7 +512,7 @@ def emitirAlerta():
 
 menu_superior=Menu(root)
 menu_superior.add_command(label="Centro de salud", command=control)
-menu_superior.add_command(label="Paciente", command=pestaña)
+
 root.config(menu=menu_superior)
 
 control()

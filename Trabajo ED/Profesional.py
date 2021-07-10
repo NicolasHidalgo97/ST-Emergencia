@@ -9,6 +9,9 @@ class Profesional():
         self.fono=Fono
         self.especialidad=Especialidad
 
+    def __str__(self):
+        return self.nombre +" "+ self.apellido+" /rut: "+str(self.rut)
+
     #Getters Setters
     def getRut(self):
         return self.rut
@@ -37,5 +40,3 @@ class Profesional():
         return True
     def verFicha(self, paciente):
         return True
-    def __str__(self):
-        return self.nombre +" "+ self.apellido

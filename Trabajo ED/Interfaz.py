@@ -29,6 +29,7 @@ imagen2 = tk.PhotoImage(file="a.png")
 fondo=Label(image=imagen2).place(x=550,y=0)
 # adiciona opciones 
 
+#inicializando
 alerta=Alerta(1,"los sauces",1,"pendiente",22,16)
 pte=Paciente(1,"vacio","h",123)
 med=Profesional(1,"vacio","h",123,"esp")
@@ -114,11 +115,12 @@ pos_m=0    #posicion medico
 pos_al_p=1 #posicion alerta paciente
 pos_al_m=1 #posicion alerta medico
 agr_p=0 # los pacientes agregados de la lista de paciente para trabajar con insertar paciente
-codigo=14 #id de tree
+agr_m=0 # los medicos agregados de la lista de medicos para trabajar con insertar paciente
+codigo=14 #id de tree SUMAR UNO AL HACER INSERT
 
 
 
-
+# Insertando la lista de pacientes el Menú Arbol
 for i in range(agr_p,len(lista_paciente)):
     tree.insert('',tk.END,text=lista_paciente[i],iid=codigo,open=False)
     tree.move(codigo,12,pos_p)
@@ -126,6 +128,15 @@ for i in range(agr_p,len(lista_paciente)):
     codigo=codigo+1
     agr_p=agr_p+1
 
+# Insertando la lista de médicos en el Menú Arbol
+for i in range(agr_m,len(profesional)):
+    tree.insert('',tk.END,text=profesional[i],iid=codigo,open=False)
+    tree.move(codigo,13,pos_m)
+    pos_m=pos_m+1
+    codigo=codigo+1
+    agr_m=agr_m+1
+
+#variables medico
 nombreM=StringVar()
 apellidoM=StringVar()
 numeroM=IntVar()
@@ -376,7 +387,8 @@ def insertarPaciente():
         codigo=codigo+1
         agr_p=agr_p+1
         pos_p=pos_p+1
-        
+
+
 """ def sumar():
     global codigo
     global agr_p
@@ -396,11 +408,48 @@ def item_selected(event):
         nombreOpcion = item['text']
         imagen = item['image']
         abierto = item['open']
-    
-        if nombreOpcion=='Medicos' or  nombreOpcion=='sub opcion 21' : 
-            medico(nombreM,apellidoM,numeroM,rutM,especialidad)
-        if nombreOpcion=="Pacientes" or  nombreOpcion=='sub opcion 21' : 
-            paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)
+
+        auxRut=""
+        aurNombre=""
+        auxApellido=""
+        auxNumero=""
+        auxEspecialidad=""
+
+        # Mostrando datos de profesionales clickeados en Menu
+        for i in range (0,len(profesional)):
+            if nombreOpcion==str(profesional[i]):
+
+                auxRut=profesional[i].getRut()
+                auxNombre=profesional[i].getNombre()
+                auxApellido=profesional[i].getApellido()
+                auxEspecialidad=profesional[i].getEspecialidad()
+                auxNumero=profesional[i].getFono()
+
+                rutM.set(auxRut)
+                nombreM.set(auxNombre)
+                apellidoM.set(auxApellido)
+                numeroM.set(auxNumero)
+                especialidad.set(auxEspecialidad)
+                medico(nombreM,apellidoM,numeroM,rutM,especialidad)
+        
+        for i in range (0,len(lista_paciente)):
+            if nombreOpcion==str(lista_paciente[i]):
+                auxRut=lista_paciente[i].getRut()
+                auxNombre=lista_paciente[i].getNombre()
+                auxApellido=lista_paciente[i].getApellido()
+                auxNumero=lista_paciente[i].getFono()
+
+                rutP.set(auxRut)
+                nombreP.set(auxNombre)
+                apellidoP.set(auxApellido)
+                numeroP.set(auxNumero)
+                paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)
+
+
+
+        #if nombreOpcion=="Pacientes" or  nombreOpcion=='sub opcion 21' : 
+
+
 
 # control de la opcion escogida
 tree.bind('<<TreeviewSelect>>', item_selected)

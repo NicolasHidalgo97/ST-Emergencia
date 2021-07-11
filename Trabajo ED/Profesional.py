@@ -10,7 +10,7 @@ class Profesional():
         self.especialidad=Especialidad
 
     def __str__(self):
-        return self.nombre +" "+ self.apellido+" /rut: "+str(self.rut)
+        return str(self.nombre) +" "+ str(self.apellido)+" /rut: "+str(self.rut)+" "+str(self.especialidad)
 
     #Getters Setters
     def getRut(self):
@@ -34,6 +34,7 @@ class Profesional():
         self.fono=fono
     def setEspecialidad(self,especialidad):
         self.especialidad=especialidad
+    
     
     #Metodos
     def editarFichaMedica(self):

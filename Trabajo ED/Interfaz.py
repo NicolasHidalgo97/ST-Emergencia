@@ -4,6 +4,7 @@ from tkinter.messagebox import showinfo
 from tkinter import*
 from BasePaciente import*
 from BaseProfesional import*
+from BaseAlertas import*
 from Profesional import*
 from Alerta import*
 from functools import partial
@@ -24,9 +25,9 @@ root.columnconfigure(0, weight=1)
 # crear el treeview
 tree = ttk.Treeview(root)
 tree.heading('#0', text='Centro Medico', anchor='w')
-imagen1 = tk.PhotoImage(file="4ccc.png")
+""" imagen1 = tk.PhotoImage(file="4ccc.png")
 imagen2 = tk.PhotoImage(file="a.png")
-fondo=Label(image=imagen2).place(x=550,y=0)
+fondo=Label(image=imagen2).place(x=550,y=0) """
 # adiciona opciones 
 
 #inicializando
@@ -54,29 +55,42 @@ lista_paciente.append(pcte3)
 lista_paciente.append(pcte4)
 lista_paciente.append(pcte5)
 
+lista_alerta.append(alt1)
+lista_alerta.append(alt2)
+
+
+
+lista_alerta[0].setPaciente(lista_paciente[0])
+lista_alerta[0].paciente.ficha.setCondicion("Grave")
+lista_alerta[0].setProfesional(profesional[0])
+
+lista_alerta[1].setPaciente(lista_paciente[1])
+lista_alerta[1].paciente.ficha.setCondicion("Grave")
+lista_alerta[1].setProfesional(profesional[1])
 
 
 #Alertas
 tree.insert('', tk.END, text='Alertas', iid=0, open=False)
 tree.insert('', tk.END, text='Pendientes', iid=1, open=False)
 
-tree.insert('', tk.END, text='Alerta 1 (datos)', iid=2, open=False)
-tree.insert('', tk.END, text='Paciente (datos)', iid=3, open=False)
-tree.insert('', tk.END, text='Ficha Medica(datos)', iid=4, open=False)
-tree.insert('', tk.END, text='Medico(datos)', iid=5, open=False)
+tree.insert('', tk.END, text=lista_alerta[0], iid=2, open=False)
+tree.insert('', tk.END, text=lista_alerta[0].paciente, iid=3, open=False)
+tree.insert('', tk.END, text=lista_alerta[0].paciente.getFicha(), iid=4, open=False)
+tree.insert('', tk.END, text=lista_alerta[0].getProfesional(), iid=5, open=False)
 
 
 tree.insert('', tk.END, text='Despachadas', iid=6, open=False)
 
-tree.insert('', tk.END, text='Alerta 2 (datos)', iid=7, open=False)
-tree.insert('', tk.END, text='Paciente (datos)', iid=8, open=False)
-tree.insert('', tk.END, text='Ficha Medica(datos)', iid=9, open=False)
-tree.insert('', tk.END, text='Medico(datos)', iid=10, open=False)
+tree.insert('', tk.END, text=lista_alerta[1], iid=7, open=False)
+tree.insert('', tk.END, text=lista_alerta[1].paciente, iid=8, open=False)
+tree.insert('', tk.END, text=lista_alerta[1].paciente.getFicha(), iid=9, open=False)
+tree.insert('', tk.END, text=lista_alerta[1].getProfesional(), iid=10, open=False)
 
 #Datos
 tree.insert('', tk.END, text='Datos', iid=11, open=False)
 tree.insert('', tk.END, text='Pacientes', iid=12, open=False)
 tree.insert('', tk.END, text='Medicos', iid=13, open=False)
+tree.insert('', tk.END, text='Emitir Alerta', iid=14, open=False)
 
 
 
@@ -95,7 +109,7 @@ tree.move(10, 7, 1)
 tree.move(12,11,0)
 tree.move(13,11,0)
 
-
+tree.move(14,0,2)
 
 """ insertarPaciente(codigo,pos_p,agr_p)
 
@@ -109,14 +123,16 @@ tree.selection """
 #label_medico=Label(root, text="Medicos",font=("Verdana",11),height=2,width=8, bg="White").place(x=195,y=220)
 #boton_medico=Button(root, text="IR",font=("Verdana",11),height=2,width=6, bg="#93C2ED").place(x=200,y=250)
 
-global codigo,pos_p,agr_p
+global codigo,pos_p,agr_p,pos_al,pos_des
 pos_p=0    #posicion paciente
 pos_m=0    #posicion medico
+pos_al=2   #posicion alerta
+pos_des=1  #poscion alertas despachadas
 pos_al_p=1 #posicion alerta paciente
 pos_al_m=1 #posicion alerta medico
 agr_p=0 # los pacientes agregados de la lista de paciente para trabajar con insertar paciente
 agr_m=0 # los medicos agregados de la lista de medicos para trabajar con insertar paciente
-codigo=14 #id de tree SUMAR UNO AL HACER INSERT
+codigo=145 #id de tree SUMAR UNO AL HACER INSERT
 
 
 
@@ -371,12 +387,12 @@ def emitirAlerta():
         lista_alerta.append(Alerta(id,"ubicacion",prioridad,"Pendiente",date.today(),datetime.now()))
         lg=len(lista_alerta)-1
         lista_alerta[lg].setPaciente(lista_paciente[azar])
-
+        insertarAlerta()
     elif largo==1:
         lista_alerta.append(Alerta(1,"ubicacion",prioridad,"Pendiente",date.today(),datetime.now()))
         lg=len(lista_alerta)-1
         lista_alerta[lg].setPaciente(lista_paciente[0])
-
+        insertarAlerta()
 def insertarPaciente():
     global codigo
     global agr_p
@@ -388,6 +404,38 @@ def insertarPaciente():
         agr_p=agr_p+1
         pos_p=pos_p+1
 
+def insertarAlerta():
+    global codigo,pos_al,pos_des
+    if lista_alerta[pos_al].estado=="Pendiente":
+        tree.insert('', tk.END, text=lista_alerta[pos_al], iid=codigo, open=False)
+        tree.move(codigo, 1, pos_al)
+        codigo+=1
+        tree.insert('', tk.END, text=lista_alerta[pos_al].paciente, iid=codigo, open=False)
+        tree.move(codigo, codigo-1, 0)
+        codigo+=1
+        tree.insert('', tk.END, text=lista_alerta[pos_al].paciente.getFicha(), iid=codigo, open=False)
+        tree.move(codigo, codigo-1, 0)
+        codigo+=1
+        tree.insert('', tk.END, text=lista_alerta[pos_al].profesional, iid=codigo, open=False)
+        tree.move(codigo, codigo-3, 1)
+        codigo+=1
+        pos_al=pos_al+1
+    #para Reciclar en nueva funcion
+    """ if lista_alerta[pos_al].estado=="Despachada":
+        tree.insert('', tk.END, text=lista_alerta[pos_al], iid=codigo, open=False)
+        tree.move(codigo, 6, pos_des)
+        codigo+=1
+        tree.insert('', tk.END, text=lista_alerta[pos_al].paciente, iid=codigo, open=False)
+        tree.move(codigo, codigo-1, 0)
+        codigo+=1
+        tree.insert('', tk.END, text=lista_alerta[pos_al].paciente.getFicha(), iid=codigo, open=False)
+        tree.move(codigo, codigo-1, 0)
+        codigo+=1
+        tree.insert('', tk.END, text=lista_alerta[pos_al].profesional, iid=codigo, open=False)
+        tree.move(codigo, codigo-3, 1)
+        codigo+=1
+        pos_des+=1
+    pos_al=pos_al+1 """
 
 """ def sumar():
     global codigo
@@ -444,7 +492,8 @@ def item_selected(event):
                 apellidoP.set(auxApellido)
                 numeroP.set(auxNumero)
                 paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)
-
+        if nombreOpcion=="Emitir Alerta" :
+            emitirAlerta()
 
 
         #if nombreOpcion=="Pacientes" or  nombreOpcion=='sub opcion 21' : 

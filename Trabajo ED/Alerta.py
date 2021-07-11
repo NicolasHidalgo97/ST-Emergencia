@@ -14,7 +14,8 @@ class Alerta(Paciente, Profesional):
         self.fecha=fecha
         self.hora=hora
         cola=[]
-    
+    def __str__(self):
+        return self.ubicacion +" "+ str(self.prioridad)+" "+str(self.fecha)
     #Getters Settersal
     def getIde(self):
         return self.ide
@@ -30,6 +31,8 @@ class Alerta(Paciente, Profesional):
         return self.hora
     def getPaciente(self):
         return self.paciente
+    def getProfesional(self):
+        return self.profesional
     
     def setIde(self,ide):
         self.ide= ide
@@ -45,6 +48,8 @@ class Alerta(Paciente, Profesional):
         self.hora=hora
     def setPaciente(self,paciente):
         self.paciente=paciente
+    def setProfesional(self,profesional):
+        self.profesional=profesional
 
     #Metodos
     def getPaciente(self):

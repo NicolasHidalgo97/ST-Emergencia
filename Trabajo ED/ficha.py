@@ -10,6 +10,9 @@ class Ficha_Medica():
         self.latitud=Latitud
         self.longitud=Longitud
     
+    def __str__(self):
+        return self.condicion 
+
     def getCondicion(self):
         return self.condicion
     def getObservaciones(self):

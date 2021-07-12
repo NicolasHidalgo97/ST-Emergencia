@@ -174,11 +174,15 @@ numeroP=StringVar()
 rutP=IntVar()
 
 #variables ficha medica
+condicionF=StringVar
 direccionF=StringVar()
 observacionesF=StringVar()
+latitudF=StringVar()
+longitudF=StringVar()
+
 patologiaF=StringVar()
 
-def paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF):
+def paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF,condicionF,latitudF,longitudF):
     #variables pacientes
     paciente = Toplevel()
     paciente.title("Ficha Medica")
@@ -351,6 +355,76 @@ def medico(nombreM,apellidoM,numeroM,rutM,especialidad):
     btn_buscar=Button(medico,text="Buscar",font=("Verdana",10),height=2,width=6,command=partial(buscarMedico,rutM)).place(x=160,y=300)
     btn_eliminar=Button(medico,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208",command=partial(eliminarMedico,rutM)).place(x=230,y=300)
 
+def infoPaciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,condicionF,latitudF,longitudF):
+    #variables pacientes
+    infoPaciente = Toplevel()
+    infoPaciente.title("Ficha Medica")
+    infoPaciente.geometry("350x400")
+    infoPaciente.config(bg="#41576B")
+
+    lbl_pac=Label(infoPaciente,      text="infoPaciente",font=("Verdena",11))
+    lbl_pac.config(bg="#41576B",fg="white")
+    lbl_nombre=Label(infoPaciente,   text="Nombre :",bg="#41576B",fg="white")
+    lbl_apellido=Label(infoPaciente, text="Apellido :",bg="#41576B",fg="white")
+    lbl_numero=Label(infoPaciente,   text="Numero :",bg="#41576B",fg="white")
+    lbl_rut=Label(infoPaciente,      text="Rut :",bg="#41576B",fg="white")
+
+    entry_nombre=Entry(infoPaciente,textvariable=nombreP)
+    entry_apellido=Entry(infoPaciente,textvariable=apellidoP)
+    entry_numero=Entry(infoPaciente,textvariable=numeroP)
+    entry_rut=Entry(infoPaciente,textvariable=rutP)
+
+    #Campos infoPACIENTE
+    lbl_pac.grid(row=1,column=1, padx=5, pady=5, sticky=W)
+
+    lbl_rut.grid(row=2,column=0, padx=5, pady=5, sticky=E)
+    entry_rut.grid(row=2,column=1, padx=5, pady=5,sticky=W)
+
+    lbl_nombre.grid(row=3,column=0, padx=5, pady=5, sticky=E)
+    entry_nombre.grid(row=3,column=1, padx=5, pady=5,sticky=W)
+
+    lbl_apellido.grid(row=4,column=0, padx=5, pady=5, sticky=E)
+    entry_apellido.grid(row=4,column=1, padx=5, pady=5,sticky=W)
+
+    lbl_numero.grid(row=5,column=0, padx=5, pady=5, sticky=E)
+    entry_numero.grid(row=5,column=1, padx=5, pady=5,sticky=W)
+
+
+    #Campos FICHA
+
+    lbl_ficha=Label(infoPaciente,      text="Ficha medica",bg="#41576B",fg="white",font=("Verdena",11))
+    lbl_direccion=Label(infoPaciente, text="Direccion :",bg="#41576B",fg="white")
+    lbl_observaciones=Label(infoPaciente,   text="Observaciones :",bg="#41576B",fg="white")
+    lbl_patologia=Label(infoPaciente,  text="Patologia :",bg="#41576B",fg="white")
+    lbl_condicion=Label(infoPaciente,  text="Condición :",bg="#41576B",fg="white")
+    lbl_latitud=Label(infoPaciente,  text="Latitud :",bg="#41576B",fg="white")
+    lbl_longitud=Label(infoPaciente,  text="Longitud :",bg="#41576B",fg="white")
+
+    entry_direccion=Entry(infoPaciente,textvariable=direccionF)
+    entry_observaciones=Entry(infoPaciente,textvariable=observacionesF)
+    entry_patologia=Entry(infoPaciente,textvariable=patologiaF)
+    entry_condicion=Entry(infoPaciente,textvariable=condicionF)
+    entry_latitud=Entry(infoPaciente,textvariable=latitudF)
+    entry_longitud=Entry(infoPaciente,textvariable=longitudF)
+
+    lbl_ficha.grid(row=6,column=1, padx=5, pady=5, sticky=W)
+
+    lbl_direccion.grid(row=7,column=0, padx=5, pady=5, sticky=E)
+    entry_direccion.grid(row=7,column=1, padx=5, pady=5,sticky=W)
+
+    lbl_condicion.grid(row=8,column=0, padx=5, pady=5, sticky=E)
+    entry_condicion.grid(row=8,column=1, padx=5, pady=5,sticky=W)
+
+    lbl_observaciones.grid(row=9,column=0, padx=5, pady=5, sticky=E)
+    entry_observaciones.grid(row=9,column=1, padx=5, pady=5,sticky=W)
+
+    lbl_latitud.grid(row=10, column=0, padx=5, pady=5, sticky=E)
+    entry_latitud.grid(row=10,column=1, padx=5, pady=5,sticky=W)
+
+    lbl_longitud.grid(row=11, column=0, padx=5, pady=5, sticky=E)
+    entry_longitud.grid(row=11,column=1, padx=5, pady=5,sticky=W)
+    
+
 def agregarMedico(Rut,Nombre,Apellido,Numero,Especialidad):
     profesional.append(Profesional(Rut.get(),Nombre.get(),Apellido.get(),Numero.get(),Especialidad.get()))
     insertarMedico()
@@ -484,6 +558,13 @@ def item_selected(event):
         auxApellido=""
         auxNumero=""
         auxEspecialidad=""
+        auxCondicion=""
+        auxObservaciones=""
+        auxDireccion=""
+        auxLatitud=""
+        auxLongitud=""
+
+
 
         # Mostrando datos de profesionales clickeados en Menu
         for i in range (0,len(profesional)):
@@ -503,20 +584,28 @@ def item_selected(event):
                 medico(nombreM,apellidoM,numeroM,rutM,especialidad)
                 print(valor)
                 return
-        
+        #al clickear un paciente en el Menú
         for i in range (0,len(lista_paciente)):
             if nombreOpcion==str(lista_paciente[i]):
                 auxRut=lista_paciente[i].getRut()
                 auxNombre=lista_paciente[i].getNombre()
                 auxApellido=lista_paciente[i].getApellido()
                 auxNumero=lista_paciente[i].getFono()
+         #       auxCondicion=lista_paciente[i].ficha.getCondicion()
+         #       auxObservaciones=""
+          #      auxDireccion=""
+           #     auxLatitud=""
+            #    auxLongitud=""
 
                 rutP.set(auxRut)
                 nombreP.set(auxNombre)
                 apellidoP.set(auxApellido)
                 numeroP.set(auxNumero)
-                paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)
+             #   condicionF.set(auxCondicion)
+                infoPaciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,condicionF,longitudF,latitudF)
                 print(valor)
+
+
         for i in range(0,codigo):
             cd="["+str(i)+"]"
             print(str(valor),cd)

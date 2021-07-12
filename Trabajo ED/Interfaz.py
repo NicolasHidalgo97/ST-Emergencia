@@ -434,6 +434,9 @@ def insertarAlerta():
         tree.insert('', tk.END, text=lista_alerta[pos_al].profesional, iid=codigo, open=False,values=codigo)
         tree.move(codigo, codigo-3, 1)
         codigo+=1
+        tree.insert('', tk.END, text='Despachar', iid=codigo, open=False,values=codigo)
+        tree.move(codigo, codigo-4, 2)
+        codigo+=1
         pos_al=pos_al+1
     #para Reciclar en nueva funcion
     """ if lista_alerta[pos_al].estado=="Despachada":
@@ -514,9 +517,11 @@ def item_selected(event):
         for i in range(0,codigo):
             cd="["+str(i)+"]"
             print(str(valor),cd)
-            if cd==str(valor):
-                print("caca")
-        print(tree.get_children(valor))
+            if cd==str(valor) and nombreOpcion=="Despachar":
+                tree.parent
+                print(tree.parent(valor))
+                tree.move(tree.parent(valor),6,pos_p)
+                return
         if nombreOpcion=="Emitir Alerta" :
             emitirAlerta()
         

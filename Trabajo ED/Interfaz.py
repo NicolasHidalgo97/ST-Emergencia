@@ -517,7 +517,6 @@ def item_selected(event):
                 tree.delete(valor)
                 print("caca")
         print(tree.get_children(valor))
-        tree.delete(valor)
         if nombreOpcion=="Emitir Alerta" :
             emitirAlerta()
         print(valor)

@@ -517,15 +517,22 @@ def item_selected(event):
                 numeroP.set(auxNumero)
                 paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)
                 print(valor)
-                return
         for i in range(0,codigo):
             cd="["+str(i)+"]"
             print(str(valor),cd)
             if cd==str(valor) and nombreOpcion=="Despachar":
-                tree.parent
                 print(tree.parent(valor))
                 tree.move(tree.parent(valor),6,pos_p)
+                tree.delete(valor)
                 return
+            for x in range (0,len(lista_paciente)):
+                if nombreOpcion != str(lista_paciente[x]):
+                    for z in tree.get_children(tree.parent(valor)):
+                        cd="["+str(z)+"]"
+                        if cd==str(valor):
+                            tree.set(valor,None,str(lista_paciente[x]))
+                            print(str(lista_paciente[x]),nombreOpcion,tree.get_children(tree.parent(valor)))
+
         if nombreOpcion=="Emitir Alerta" :
             emitirAlerta()
         if nombreOpcion=="Medico" :
@@ -533,8 +540,17 @@ def item_selected(event):
         if nombreOpcion=="Paciente" :
             paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)
         
-        
         #if nombreOpcion=="Pacientes" or  nombreOpcion=='sub opcion 21' : 
+
+def actualizarPaciente(valor,lista_paciente):
+    for i in range(0,codigo):
+        cd="["+str(i)+"]"
+        print(str(valor),cd)
+        if cd==str(valor):
+            tree.parent
+            print(tree.parent(valor))
+            tree.set(valor,value=lista_paciente)
+            return
 
 
 

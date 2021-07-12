@@ -92,7 +92,9 @@ tree.insert('', tk.END, text='Datos', iid=11, open=False,values=11)
 tree.insert('', tk.END, text='Pacientes', iid=12, open=False,values=12)
 tree.insert('', tk.END, text='Medicos', iid=13, open=False,values=13)
 tree.insert('', tk.END, text='Emitir Alerta', iid=14, open=False,values=14)
-
+tree.insert('', tk.END, text='Añadir/Modificar/Eliminar', iid=16, open=False)
+tree.insert('', tk.END, text='Paciente', iid=17, open=False)
+tree.insert('', tk.END, text='Medico', iid=18, open=False)
 
 
 tree.move(1, 0, 0)
@@ -112,7 +114,9 @@ tree.move(13,11,0)
 
 tree.move(14,0,2)
 tree.move(15,2,2)
-
+tree.move(16,11,12)
+tree.move(17,16,0)
+tree.move(18,16,0)
 """ insertarPaciente(codigo,pos_p,agr_p)
 
 tree.selection """
@@ -134,7 +138,7 @@ pos_al_p=1 #posicion alerta paciente
 pos_al_m=1 #posicion alerta medico
 agr_p=0 # los pacientes agregados de la lista de paciente para trabajar con insertar paciente
 agr_m=0 # los medicos agregados de la lista de medicos para trabajar con insertar paciente
-codigo=16 #id de tree SUMAR UNO AL HACER INSERT
+codigo=19 #id de tree SUMAR UNO AL HACER INSERT
 
 
 
@@ -524,6 +528,10 @@ def item_selected(event):
                 return
         if nombreOpcion=="Emitir Alerta" :
             emitirAlerta()
+        if nombreOpcion=="Medico" :
+            medico(nombreM,apellidoM,numeroM,rutM,especialidad)
+        if nombreOpcion=="Paciente" :
+            paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)
         
         
         #if nombreOpcion=="Pacientes" or  nombreOpcion=='sub opcion 21' : 

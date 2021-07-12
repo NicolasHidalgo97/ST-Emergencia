@@ -147,6 +147,8 @@ agr_p=0 # los pacientes agregados de la lista de paciente para trabajar con inse
 agr_m=0 # los medicos agregados de la lista de medicos para trabajar con insertar paciente
 codigo=19 #id de tree SUMAR UNO AL HACER INSERT
 
+act=0 #
+
 
 
 # Insertando la lista de pacientes el Menú Arbol
@@ -288,6 +290,7 @@ def paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF
                 lista_paciente[i].setFono(Fono.get())
                 lista_paciente[i].setFicha(Ficha_Medica(Patologia.get(),Observacion.get(),Direccion.get(),0,0))
                 actualizarTablaPtes()
+                act=i
                 print(lista_paciente[i].rut,lista_paciente[i].nombre,lista_paciente[i].apellido,lista_paciente[i].fono,lista_paciente[i].ficha.direccion,lista_paciente[i].ficha.condicion,lista_paciente[i].ficha.observaciones)
 
     def eliminarPaciente(Rut):
@@ -472,14 +475,16 @@ def emitirAlerta():
     if largo>1:
         id=len(lista_alerta)+1
         azar=randint(0,largo-1)
-        lista_alerta.append(Alerta(id,"ubicacion",prioridad,"Pendiente",date.today(),datetime.now()))
+        lista_alerta.append(Alerta(id,comunas[randint(0,31)],prioridad,"Pendiente",date.today(),datetime.now()))
         lg=len(lista_alerta)-1
         lista_alerta[lg].setPaciente(lista_paciente[azar])
+        lista_alerta[lg].setProfesional(profesional[randint(0,len(profesional))])
         insertarAlerta()
     elif largo==1:
-        lista_alerta.append(Alerta(1,"ubicacion",prioridad,"Pendiente",date.today(),datetime.now()))
+        lista_alerta.append(Alerta(1,comunas[randint(0,31)],prioridad,"Pendiente",date.today(),datetime.now()))
         lg=len(lista_alerta)-1
         lista_alerta[lg].setPaciente(lista_paciente[0])
+        lista_alerta[lg].setProfesional(profesional[randint(0,len(profesional))])
         insertarAlerta()
 
 def insertarPaciente():
@@ -621,20 +626,29 @@ def item_selected(event):
                 tree.move(tree.parent(valor),6,pos_p)
                 tree.delete(valor)
                 return
-            for x in range (0,len(lista_paciente)):
+            """ if cd==str(valor):
+                print(tree.parent(valor),act)
+                if nombreOpcion != str(lista_paciente[act]) and tree.parent(valor)==12:
+                    
+                    tree.item(valor,text=str(lista_paciente[act]))
+                    nombreOpcion=item['text']
+                    print(cd,valor,nombreOpcion,str(lista_paciente[0]),nombreOpcion,tree.get_children(tree.parent(valor)))
+                    return """
+
+            """ for x in range (0,len(lista_paciente)):
                 if nombreOpcion != str(lista_paciente[x]):
                     for z in tree.get_children(tree.parent(valor)):
                         cd="["+str(z)+"]"
                         if cd==str(valor):
                             tree.set(valor,None,str(lista_paciente[x]))
-                            print(str(lista_paciente[x]),nombreOpcion,tree.get_children(tree.parent(valor)))
+                            print(str(lista_paciente[x]),nombreOpcion,tree.get_children(tree.parent(valor))) """
 
         if nombreOpcion=="Emitir Alerta" :
             emitirAlerta()
         if nombreOpcion=="Medico" :
             medico(nombreM,apellidoM,numeroM,rutM,especialidad)
         if nombreOpcion=="Paciente" :
-            paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)
+            paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF,condicionF,latitudF,longitudF)
         
         #if nombreOpcion=="Pacientes" or  nombreOpcion=='sub opcion 21' : 
 

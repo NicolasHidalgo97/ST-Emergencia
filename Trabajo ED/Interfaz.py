@@ -68,10 +68,17 @@ lista_alerta[1].setPaciente(lista_paciente[1])
 lista_alerta[1].paciente.ficha.setCondicion("Cancer")
 lista_alerta[1].setProfesional(profesional[1])
 
-
+imagen1 = tk.PhotoImage(file="alerta.png")
+imagen2 = tk.PhotoImage(file="datos.png")
+imagen3 = tk.PhotoImage(file="doctor.png")
+imagen4 = tk.PhotoImage(file="hospitalizacion.png")
+imagen5 = tk.PhotoImage(file="editar.png")
+imagen6 = tk.PhotoImage(file="comprobado.png")
+imagen7 = tk.PhotoImage(file="pendiente.png")
+imagen8 = tk.PhotoImage(file="advertencia.png")
 #Alertas
-tree.insert('', tk.END, text='Alertas', iid=0, open=False,values=0)
-tree.insert('', tk.END, text='Pendientes', iid=1, open=False,values=1)
+tree.insert('', tk.END, text='Alertas', iid=0, image=imagen1, open=False,values=0)
+tree.insert('', tk.END, text='Pendientes', iid=1, image=imagen7, open=False,values=1)
 
 tree.insert('', tk.END, text=lista_alerta[0], iid=2, open=False,values=2)
 tree.insert('', tk.END, text=lista_alerta[0].paciente, iid=3, open=False,values=3)
@@ -80,7 +87,7 @@ tree.insert('', tk.END, text=lista_alerta[0].getProfesional(), iid=5, open=False
 tree.insert('', tk.END, text='Despachar', iid=15, open=False,values=15)
 
 
-tree.insert('', tk.END, text='Despachadas', iid=6, open=False,values=6)
+tree.insert('', tk.END, text='Despachadas', iid=6, image=imagen6, open=False,values=6)
 
 tree.insert('', tk.END, text=lista_alerta[1], iid=7, open=False,values=7)
 tree.insert('', tk.END, text=lista_alerta[1].paciente, iid=8, open=False,values=8)
@@ -88,13 +95,13 @@ tree.insert('', tk.END, text=lista_alerta[1].paciente.getFicha(), iid=9, open=Fa
 tree.insert('', tk.END, text=lista_alerta[1].getProfesional(), iid=10, open=False,values=10)
 
 #Datos
-tree.insert('', tk.END, text='Datos', iid=11, open=False,values=11)
-tree.insert('', tk.END, text='Pacientes', iid=12, open=False,values=12)
-tree.insert('', tk.END, text='Medicos', iid=13, open=False,values=13)
-tree.insert('', tk.END, text='Emitir Alerta', iid=14, open=False,values=14)
-tree.insert('', tk.END, text='Añadir/Modificar/Eliminar', iid=16, open=False)
-tree.insert('', tk.END, text='Paciente', iid=17, open=False)
-tree.insert('', tk.END, text='Medico', iid=18, open=False)
+tree.insert('', tk.END, text='Datos', iid=11,image=imagen2, open=False,values=11)
+tree.insert('', tk.END, text='Pacientes', iid=12, image=imagen4,open=False,values=12)
+tree.insert('', tk.END, text='Medicos', iid=13,image=imagen3, open=False,values=13)
+tree.insert('', tk.END, text='Emitir Alerta', iid=14, image=imagen8, open=False,values=14)
+tree.insert('', tk.END, text='Añadir/Modificar/Eliminar',image=imagen5, iid=16, open=False)
+tree.insert('', tk.END, text='Paciente', iid=17,image=imagen4, open=False)
+tree.insert('', tk.END, text='Medico', iid=18, image=imagen3,open=False)
 
 
 tree.move(1, 0, 0)

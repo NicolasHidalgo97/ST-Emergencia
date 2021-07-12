@@ -61,36 +61,37 @@ lista_alerta.append(alt2)
 
 
 lista_alerta[0].setPaciente(lista_paciente[0])
-lista_alerta[0].paciente.ficha.setCondicion("Grave")
+lista_alerta[0].paciente.ficha.setCondicion("Hipertenso")
 lista_alerta[0].setProfesional(profesional[0])
 
 lista_alerta[1].setPaciente(lista_paciente[1])
-lista_alerta[1].paciente.ficha.setCondicion("Grave")
+lista_alerta[1].paciente.ficha.setCondicion("Cancer")
 lista_alerta[1].setProfesional(profesional[1])
 
 
 #Alertas
-tree.insert('', tk.END, text='Alertas', iid=0, open=False)
-tree.insert('', tk.END, text='Pendientes', iid=1, open=False)
+tree.insert('', tk.END, text='Alertas', iid=0, open=False,values=0)
+tree.insert('', tk.END, text='Pendientes', iid=1, open=False,values=1)
 
-tree.insert('', tk.END, text=lista_alerta[0], iid=2, open=False)
-tree.insert('', tk.END, text=lista_alerta[0].paciente, iid=3, open=False)
-tree.insert('', tk.END, text=lista_alerta[0].paciente.getFicha(), iid=4, open=False)
-tree.insert('', tk.END, text=lista_alerta[0].getProfesional(), iid=5, open=False)
+tree.insert('', tk.END, text=lista_alerta[0], iid=2, open=False,values=2)
+tree.insert('', tk.END, text=lista_alerta[0].paciente, iid=3, open=False,values=3)
+tree.insert('', tk.END, text=lista_alerta[0].paciente.getFicha(), iid=4, open=False,values=4)
+tree.insert('', tk.END, text=lista_alerta[0].getProfesional(), iid=5, open=False,values=5)
+tree.insert('', tk.END, text='Despachar', iid=15, open=False,values=15)
 
 
-tree.insert('', tk.END, text='Despachadas', iid=6, open=False)
+tree.insert('', tk.END, text='Despachadas', iid=6, open=False,values=6)
 
-tree.insert('', tk.END, text=lista_alerta[1], iid=7, open=False)
-tree.insert('', tk.END, text=lista_alerta[1].paciente, iid=8, open=False)
-tree.insert('', tk.END, text=lista_alerta[1].paciente.getFicha(), iid=9, open=False)
-tree.insert('', tk.END, text=lista_alerta[1].getProfesional(), iid=10, open=False)
+tree.insert('', tk.END, text=lista_alerta[1], iid=7, open=False,values=7)
+tree.insert('', tk.END, text=lista_alerta[1].paciente, iid=8, open=False,values=8)
+tree.insert('', tk.END, text=lista_alerta[1].paciente.getFicha(), iid=9, open=False,values=9)
+tree.insert('', tk.END, text=lista_alerta[1].getProfesional(), iid=10, open=False,values=10)
 
 #Datos
-tree.insert('', tk.END, text='Datos', iid=11, open=False)
-tree.insert('', tk.END, text='Pacientes', iid=12, open=False)
-tree.insert('', tk.END, text='Medicos', iid=13, open=False)
-tree.insert('', tk.END, text='Emitir Alerta', iid=14, open=False)
+tree.insert('', tk.END, text='Datos', iid=11, open=False,values=11)
+tree.insert('', tk.END, text='Pacientes', iid=12, open=False,values=12)
+tree.insert('', tk.END, text='Medicos', iid=13, open=False,values=13)
+tree.insert('', tk.END, text='Emitir Alerta', iid=14, open=False,values=14)
 
 
 
@@ -110,6 +111,7 @@ tree.move(12,11,0)
 tree.move(13,11,0)
 
 tree.move(14,0,2)
+tree.move(15,2,2)
 
 """ insertarPaciente(codigo,pos_p,agr_p)
 
@@ -123,7 +125,7 @@ tree.selection """
 #label_medico=Label(root, text="Medicos",font=("Verdana",11),height=2,width=8, bg="White").place(x=195,y=220)
 #boton_medico=Button(root, text="IR",font=("Verdana",11),height=2,width=6, bg="#93C2ED").place(x=200,y=250)
 
-global codigo,pos_p,agr_p,pos_al,pos_des
+global codigo,pos_p,agr_p,pos_al,pos_des,agr_m,pos_m
 pos_p=0    #posicion paciente
 pos_m=0    #posicion medico
 pos_al=2   #posicion alerta
@@ -132,13 +134,13 @@ pos_al_p=1 #posicion alerta paciente
 pos_al_m=1 #posicion alerta medico
 agr_p=0 # los pacientes agregados de la lista de paciente para trabajar con insertar paciente
 agr_m=0 # los medicos agregados de la lista de medicos para trabajar con insertar paciente
-codigo=145 #id de tree SUMAR UNO AL HACER INSERT
+codigo=16 #id de tree SUMAR UNO AL HACER INSERT
 
 
 
 # Insertando la lista de pacientes el Menú Arbol
 for i in range(agr_p,len(lista_paciente)):
-    tree.insert('',tk.END,text=lista_paciente[i],iid=codigo,open=False)
+    tree.insert('',tk.END,text=lista_paciente[i],iid=codigo,open=False,values=codigo)
     tree.move(codigo,12,pos_p)
     pos_p=pos_p+1
     codigo=codigo+1
@@ -146,7 +148,7 @@ for i in range(agr_p,len(lista_paciente)):
 
 # Insertando la lista de médicos en el Menú Arbol
 for i in range(agr_m,len(profesional)):
-    tree.insert('',tk.END,text=profesional[i],iid=codigo,open=False)
+    tree.insert('',tk.END,text=profesional[i],iid=codigo,open=False,values=codigo)
     tree.move(codigo,13,pos_m)
     pos_m=pos_m+1
     codigo=codigo+1
@@ -347,6 +349,7 @@ def medico(nombreM,apellidoM,numeroM,rutM,especialidad):
 
 def agregarMedico(Rut,Nombre,Apellido,Numero,Especialidad):
     profesional.append(Profesional(Rut.get(),Nombre.get(),Apellido.get(),Numero.get(),Especialidad.get()))
+    insertarMedico()
 
 def buscarMedico(Rut):
     largo=len(profesional)
@@ -393,30 +396,42 @@ def emitirAlerta():
         lg=len(lista_alerta)-1
         lista_alerta[lg].setPaciente(lista_paciente[0])
         insertarAlerta()
+
 def insertarPaciente():
     global codigo
     global agr_p
     global pos_p
     for i in range(agr_p,len(lista_paciente)):
-        tree.insert('',tk.END,text=lista_paciente[i],iid=codigo,open=False)
+        tree.insert('',tk.END,text=lista_paciente[i],iid=codigo,open=False, values=codigo)
         tree.move(codigo,12,pos_p)
         codigo=codigo+1
         agr_p=agr_p+1
         pos_p=pos_p+1
 
+def insertarMedico():
+    global codigo
+    global agr_m
+    global pos_m
+    for i in range(agr_m,len(profesional)):
+        tree.insert('',tk.END,text=profesional[i],iid=codigo,open=False,values=codigo)
+        tree.move(codigo,13,pos_m)
+        codigo=codigo+1
+        agr_m=agr_m+1
+        pos_m=pos_m+1
+
 def insertarAlerta():
     global codigo,pos_al,pos_des
     if lista_alerta[pos_al].estado=="Pendiente":
-        tree.insert('', tk.END, text=lista_alerta[pos_al], iid=codigo, open=False)
+        tree.insert('', tk.END, text=lista_alerta[pos_al], iid=codigo, open=False,values=codigo)
         tree.move(codigo, 1, pos_al)
         codigo+=1
-        tree.insert('', tk.END, text=lista_alerta[pos_al].paciente, iid=codigo, open=False)
+        tree.insert('', tk.END, text=lista_alerta[pos_al].paciente, iid=codigo, open=False,values=codigo)
         tree.move(codigo, codigo-1, 0)
         codigo+=1
-        tree.insert('', tk.END, text=lista_alerta[pos_al].paciente.getFicha(), iid=codigo, open=False)
+        tree.insert('', tk.END, text=lista_alerta[pos_al].paciente.getFicha(), iid=codigo, open=False,values=codigo)
         tree.move(codigo, codigo-1, 0)
         codigo+=1
-        tree.insert('', tk.END, text=lista_alerta[pos_al].profesional, iid=codigo, open=False)
+        tree.insert('', tk.END, text=lista_alerta[pos_al].profesional, iid=codigo, open=False,values=codigo)
         tree.move(codigo, codigo-3, 1)
         codigo+=1
         pos_al=pos_al+1
@@ -479,6 +494,8 @@ def item_selected(event):
                 numeroM.set(auxNumero)
                 especialidad.set(auxEspecialidad)
                 medico(nombreM,apellidoM,numeroM,rutM,especialidad)
+                print(valor)
+                return
         
         for i in range (0,len(lista_paciente)):
             if nombreOpcion==str(lista_paciente[i]):
@@ -492,10 +509,19 @@ def item_selected(event):
                 apellidoP.set(auxApellido)
                 numeroP.set(auxNumero)
                 paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF)
+                print(valor)
+                return
+        for i in range(0,codigo):
+            cd="["+str(i)+"]"
+            if cd==valor:
+                tree.delete(valor)
+                print("caca")
+        print(tree.get_children(valor))
+        tree.delete(valor)
         if nombreOpcion=="Emitir Alerta" :
             emitirAlerta()
-
-
+        print(valor)
+        
         #if nombreOpcion=="Pacientes" or  nombreOpcion=='sub opcion 21' : 
 
 

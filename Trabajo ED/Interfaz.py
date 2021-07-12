@@ -513,13 +513,13 @@ def item_selected(event):
                 return
         for i in range(0,codigo):
             cd="["+str(i)+"]"
-            if cd==valor:
-                tree.delete(valor)
+            print(str(valor),cd)
+            if cd==str(valor):
                 print("caca")
         print(tree.get_children(valor))
         if nombreOpcion=="Emitir Alerta" :
             emitirAlerta()
-        print(valor)
+        
         
         #if nombreOpcion=="Pacientes" or  nombreOpcion=='sub opcion 21' : 
 

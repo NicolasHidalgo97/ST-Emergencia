@@ -195,7 +195,7 @@ def paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF
     #variables pacientes
     paciente = Toplevel()
     paciente.title("Ficha Medica")
-    paciente.geometry("1200x400")
+    paciente.geometry("310x420")
     paciente.config(bg="#41576B")
 
     lbl_pac=Label(paciente,      text="Paciente",font=("Verdena",11))
@@ -260,7 +260,7 @@ def paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF
         lista_paciente[largo].setFicha(Ficha_Medica(Patologia.get(),Observacion.get(),Direccion.get(),0,0))
         rutP=""
         posicion=len(lista_paciente)
-        actualizarTablaPtes()
+        #ctualizarTablaPtes()
         insertarPaciente()
     
     
@@ -289,7 +289,7 @@ def paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF
                 lista_paciente[i].setApellido(Apellido.get())
                 lista_paciente[i].setFono(Fono.get())
                 lista_paciente[i].setFicha(Ficha_Medica(Patologia.get(),Observacion.get(),Direccion.get(),0,0))
-                actualizarTablaPtes()
+                #actualizarTablaPtes()
                 act=i
                 print(lista_paciente[i].rut,lista_paciente[i].nombre,lista_paciente[i].apellido,lista_paciente[i].fono,lista_paciente[i].ficha.direccion,lista_paciente[i].ficha.condicion,lista_paciente[i].ficha.observaciones)
 
@@ -297,26 +297,12 @@ def paciente(nombreP,apellidoP,numeroP,rutP,direccionF,observacionesF,patologiaF
         for i in lista_paciente:
             if i.rut==Rut.get():
                 lista_paciente.remove(i)
-                actualizarTablaPtes()
+                #actualizarTablaPtes()
 
     btn_agregar=Button(paciente,text="Agregar",font=("Verdana",10),height=2,width=6, bg="#74C69D",command=partial(guardarPaciente,rutP,nombreP,apellidoP,numeroP,direccionF,patologiaF,observacionesF,agr_p,codigo,pos_p)).place(x=20,y=300)
     btn_editar=Button(paciente,text="Editar",font=("Verdana",10),height=2,width=6,command=partial(editarPaciente,rutP,nombreP,apellidoP,numeroP,direccionF,patologiaF,observacionesF)).place(x=90,y=300)
     btn_buscar=Button(paciente,text="Buscar",font=("Verdana",10),height=2,width=6,command=partial(buscarPaciente,rutP)).place(x=160,y=300)
     btn_eliminar=Button(paciente,text="Eliminar",font=("Verdana",10),height=2,width=6,bg="#9D0208",command=partial(eliminarPaciente,rutP)).place(x=230,y=300)
-
-    pacientes_table = ttk.Treeview(paciente,height=10, columns = ('#1','#2','#3'))
-    pacientes_table.place(x=350,y=50)
-    pacientes_table.heading("#0",text="RUT", anchor=W)
-    pacientes_table.heading("#1",text="NOMBRE", anchor=W)
-    pacientes_table.heading("#2",text="APELLIDO", anchor=W)
-    pacientes_table.heading("#3",text="ESTADO", anchor=W)
-    
-
-    def actualizarTablaPtes():
-        pacientes_table.delete(*pacientes_table.get_children())
-        for i in range(len(lista_paciente)):
-            pacientes_table.insert("",0,text=lista_paciente[i].rut,values=(lista_paciente[i].nombre,lista_paciente[i].apellido))
-    
 
 
 def medico(nombreM,apellidoM,numeroM,rutM,especialidad):

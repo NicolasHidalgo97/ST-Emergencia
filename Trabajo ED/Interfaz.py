@@ -102,6 +102,7 @@ tree.insert('', tk.END, text='Emitir Alerta', iid=14, image=imagen8, open=False,
 tree.insert('', tk.END, text='Añadir/Modificar/Eliminar',image=imagen5, iid=16, open=False)
 tree.insert('', tk.END, text='Paciente', iid=17,image=imagen4, open=False)
 tree.insert('', tk.END, text='Medico', iid=18, image=imagen3,open=False)
+tree.insert('', tk.END, text='Actualizar', iid=19, image=imagen3,open=False)
 
 
 tree.move(1, 0, 0)
@@ -136,7 +137,7 @@ tree.selection """
 #label_medico=Label(root, text="Medicos",font=("Verdana",11),height=2,width=8, bg="White").place(x=195,y=220)
 #boton_medico=Button(root, text="IR",font=("Verdana",11),height=2,width=6, bg="#93C2ED").place(x=200,y=250)
 
-global codigo,pos_p,agr_p,pos_al,pos_des,agr_m,pos_m
+global codigo,pos_p,agr_p,pos_al,pos_des,agr_m,pos_m,con_p_t,con_m_t
 pos_p=0    #posicion paciente
 pos_m=0    #posicion medico
 pos_al=2   #posicion alerta
@@ -145,24 +146,29 @@ pos_al_p=1 #posicion alerta paciente
 pos_al_m=1 #posicion alerta medico
 agr_p=0 # los pacientes agregados de la lista de paciente para trabajar con insertar paciente
 agr_m=0 # los medicos agregados de la lista de medicos para trabajar con insertar paciente
-codigo=19 #id de tree SUMAR UNO AL HACER INSERT
+codigo=20 #id de tree SUMAR UNO AL HACER INSERT
 
-act=0 #
-
+con_p_t=[] #conecta el id del tree con el paciente que se guarda (codigo,i)
+con_m_t=[]
 
 
 # Insertando la lista de pacientes el Menú Arbol
 for i in range(agr_p,len(lista_paciente)):
     tree.insert('',tk.END,text=lista_paciente[i],iid=codigo,open=False,values=codigo)
     tree.move(codigo,12,pos_p)
+    con_p_t.append([codigo,i])
+
     pos_p=pos_p+1
     codigo=codigo+1
     agr_p=agr_p+1
+    
 
 # Insertando la lista de médicos en el Menú Arbol
 for i in range(agr_m,len(profesional)):
     tree.insert('',tk.END,text=profesional[i],iid=codigo,open=False,values=codigo)
     tree.move(codigo,13,pos_m)
+    con_m_t.append([codigo,i])
+
     pos_m=pos_m+1
     codigo=codigo+1
     agr_m=agr_m+1
@@ -491,12 +497,17 @@ def insertarPaciente():
     global codigo
     global agr_p
     global pos_p
+    global con_p_t
     for i in range(agr_p,len(lista_paciente)):
         tree.insert('',tk.END,text=lista_paciente[i],iid=codigo,open=False, values=codigo)
         tree.move(codigo,12,pos_p)
+
+        con_p_t.append([codigo,i])
+
         codigo=codigo+1
         agr_p=agr_p+1
         pos_p=pos_p+1
+        
 
 def insertarMedico():
     global codigo
@@ -505,6 +516,9 @@ def insertarMedico():
     for i in range(agr_m,len(profesional)):
         tree.insert('',tk.END,text=profesional[i],iid=codigo,open=False,values=codigo)
         tree.move(codigo,13,pos_m)
+
+        con_m_t.append([codigo,i])
+
         codigo=codigo+1
         agr_m=agr_m+1
         pos_m=pos_m+1
@@ -558,6 +572,7 @@ def insertarAlerta():
 def item_selected(event):
     for selected_item in tree.selection():
         # dictionary
+        global con_p_t
         item = tree.item(selected_item)
         # list
         valor = item['values']
@@ -626,23 +641,15 @@ def item_selected(event):
                 tree.move(tree.parent(valor),6,pos_p)
                 tree.delete(valor)
                 return
-            """ if cd==str(valor):
-                print(tree.parent(valor),act)
-                if nombreOpcion != str(lista_paciente[act]) and tree.parent(valor)==12:
-                    
-                    tree.item(valor,text=str(lista_paciente[act]))
-                    nombreOpcion=item['text']
-                    print(cd,valor,nombreOpcion,str(lista_paciente[0]),nombreOpcion,tree.get_children(tree.parent(valor)))
-                    return """
+        if nombreOpcion=="Actualizar":
+            for i in con_p_t:
+                if tree.item(i[0],option='text')!=str(lista_paciente[i[1]]):
+                    tree.item(i[0],text=str(lista_paciente[i[1]])) 
+            for i in con_m_t:
+                if tree.item(i[0],option='text')!=str(profesional[i[1]]):
+                    tree.item(i[0],text=str(profesional[i[1]])) 
 
-            """ for x in range (0,len(lista_paciente)):
-                if nombreOpcion != str(lista_paciente[x]):
-                    for z in tree.get_children(tree.parent(valor)):
-                        cd="["+str(z)+"]"
-                        if cd==str(valor):
-                            tree.set(valor,None,str(lista_paciente[x]))
-                            print(str(lista_paciente[x]),nombreOpcion,tree.get_children(tree.parent(valor))) """
-
+        print(tree.item(2,option='text'))
         if nombreOpcion=="Emitir Alerta" :
             emitirAlerta()
         if nombreOpcion=="Medico" :
